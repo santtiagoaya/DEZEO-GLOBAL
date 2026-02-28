@@ -10,25 +10,59 @@
 :root,[data-theme="light"]{
   --bg:#ffffff;--bg2:#f7f7f5;--bg3:#efefeb;--line:rgba(0,0,0,.08);--line2:rgba(0,0,0,.05);
   --ink:#0a0a0a;--ink2:#2a2a2a;--ink3:#6a6a6a;--ink4:#aaaaaa;--sand:#8a7a6a;
-  --surface-modal:#ffffff;--navbar-bg:rgba(255,255,255,0.94);--icon-btn-bg:rgba(255,255,255,0.9);
+  --surface-modal:#ffffff;--navbar-bg:#0a0a0a;--icon-btn-bg:rgba(255,255,255,0.9);
   --chip-off-bg:transparent;--chip-off-color:var(--ink3);--theme-toggle-bg:#f0f0ec;
   --shadow:0 40px 100px rgba(0,0,0,.10),0 0 0 1px rgba(0,0,0,.05);
   --qr-btn-bg:rgba(0,0,0,0.08);--qr-btn-border:rgba(0,0,0,0.15);--qr-btn-stroke:#0a0a0a;
+  --nav-shadow:0 8px 32px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.18);
 }
 [data-theme="dark"]{
   --bg:#0c0c0c;--bg2:#161616;--bg3:#1e1e1e;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.04);
   --ink:#f0ede8;--ink2:#c8c4be;--ink3:#7a7672;--ink4:#484440;--sand:#b8a890;
-  --surface-modal:#141414;--navbar-bg:rgba(12,12,12,0.96);--icon-btn-bg:rgba(255,255,255,.08);
+  --surface-modal:#141414;--navbar-bg:#1a1a1a;--icon-btn-bg:rgba(255,255,255,.08);
   --chip-off-bg:transparent;--chip-off-color:var(--ink3);--theme-toggle-bg:#2a2a2a;
   --shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04);
   --qr-btn-bg:rgba(255,255,255,0.12);--qr-btn-border:rgba(255,255,255,0.22);--qr-btn-stroke:#ffffff;
+  --nav-shadow:0 8px 32px rgba(0,0,0,.6),0 2px 8px rgba(0,0,0,.4);
 }
 body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Inter',sans-serif;}
 .phone{width:390px;height:844px;background:var(--bg);border-radius:52px;overflow:hidden;position:relative;box-shadow:var(--shadow);transition:background .3s;}
 .sbar{position:absolute;top:0;left:0;right:0;height:50px;display:flex;justify-content:space-between;align-items:flex-end;padding:0 28px 8px;font-size:11px;font-weight:600;color:var(--ink);z-index:300;pointer-events:none;transition:color .3s;}
-.screen{position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;overflow-x:hidden;display:none;scrollbar-width:none;padding-bottom:90px;background:var(--bg);transition:background .3s;}
+.screen{position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;overflow-x:hidden;display:none;scrollbar-width:none;padding-bottom:100px;background:var(--bg);transition:background .3s;}
 .screen::-webkit-scrollbar{display:none;}
 .screen.active{display:block;}
+
+/* FLOATING NAVBAR */
+.navbar{
+  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+  height:62px;background:var(--navbar-bg);
+  backdrop-filter:blur(20px);
+  border-radius:99px;
+  display:flex;justify-content:center;align-items:center;
+  padding:6px 8px;z-index:200;
+  box-shadow:var(--nav-shadow);
+  gap:4px;
+  width:calc(100% - 36px);
+  max-width:360px;
+}
+.nav-item{
+  display:flex;align-items:center;justify-content:center;
+  gap:7px;cursor:pointer;
+  padding:0 14px;height:50px;border-radius:99px;
+  font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);
+  transition:all .28s cubic-bezier(.34,1.56,.64,1);
+  flex-shrink:0;white-space:nowrap;letter-spacing:-.1px;
+}
+.nav-item svg{width:18px;height:18px;stroke-width:1.8;transition:all .28s;flex-shrink:0;}
+.nav-item.active{
+  background:#ffffff;color:#0a0a0a;
+  padding:0 18px;
+}
+[data-theme="dark"] .nav-item.active{background:#f0ede8;color:#0a0a0a;}
+.nav-item.active svg{stroke:#0a0a0a;stroke-width:2.2;}
+.nav-item:not(.active) svg{stroke:rgba(255,255,255,0.45);}
+.nav-lbl{display:none;}
+.nav-item.active .nav-lbl{display:inline;}
 
 /* THEME TOGGLE */
 .theme-toggle{position:relative;width:56px;height:28px;border-radius:99px;background:var(--theme-toggle-bg);border:1px solid var(--line);cursor:pointer;transition:background .3s,border .3s;flex-shrink:0;display:flex;align-items:center;padding:3px;}
@@ -39,15 +73,6 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 .theme-toggle-thumb .ico-moon{opacity:0;transition:opacity .2s;}
 [data-theme="dark"] .theme-toggle-thumb .ico-sun{opacity:0;}
 [data-theme="dark"] .theme-toggle-thumb .ico-moon{opacity:1;}
-
-/* NAVBAR */
-.navbar{position:absolute;bottom:0;left:0;right:0;height:82px;background:var(--navbar-bg);backdrop-filter:blur(20px);border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;padding:0 4px 14px;z-index:200;}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:7px 14px;border-radius:14px;font-size:9px;font-weight:600;color:var(--ink4);transition:color .2s;letter-spacing:.4px;text-transform:uppercase;}
-.nav-item svg{width:20px;height:20px;stroke-width:1.8;transition:transform .2s;}
-.nav-item.active{color:var(--ink);}
-.nav-item.active svg{stroke-width:2.2;transform:scale(1.06);}
-.nav-dot{width:3px;height:3px;border-radius:50%;background:var(--ink);display:none;margin-top:1px;}
-.nav-item.active .nav-dot{display:block;}
 
 /* UTILS */
 .chip{flex-shrink:0;padding:7px 14px;background:var(--chip-off-bg);border:1px solid var(--line);border-radius:99px;font-size:11px;font-weight:600;color:var(--chip-off-color);cursor:pointer;white-space:nowrap;transition:all .18s;letter-spacing:.2px;}
@@ -81,19 +106,9 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 .btn-hero{flex:1;padding:15px 20px;border-radius:16px;border:none;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;cursor:pointer;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:-.2px;transition:opacity .15s;}
 .btn-hero:active{opacity:.8;}
 .btn-hero svg{width:16px;height:16px;stroke:var(--bg);stroke-width:2;}
-
-/* QR BUTTON — adaptive */
-.btn-hero-sq{
-  width:50px;height:50px;border-radius:12px;
-  background:var(--qr-btn-bg);
-  border:1px solid var(--qr-btn-border);
-  backdrop-filter:blur(12px);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;flex-shrink:0;transition:opacity .15s;
-}
+.btn-hero-sq{width:50px;height:50px;border-radius:12px;background:var(--qr-btn-bg);border:1px solid var(--qr-btn-border);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:opacity .15s;}
 .btn-hero-sq svg{width:20px;height:20px;stroke:var(--qr-btn-stroke);stroke-width:1.8;}
 .btn-hero-sq:active{opacity:.7;}
-
 .stats-strip{display:flex;margin:0 20px 18px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
 .stat-item{flex:1;padding:13px 6px;text-align:center;}
 .stat-item:not(:last-child){border-right:1px solid var(--line);}
@@ -322,7 +337,7 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 .to-garment{width:190px;height:250px;object-fit:contain;opacity:.9;animation:fl 3s ease-in-out infinite;}
 @keyframes fl{0%,100%{transform:translateY(0) scale(1.02)}50%{transform:translateY(-12px) scale(1)}}
 .to-glow{position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%);pointer-events:none;}
-.to-bar{position:absolute;bottom:90px;left:0;right:0;padding:0 18px;z-index:10;}
+.to-bar{position:absolute;bottom:100px;left:0;right:0;padding:0 18px;z-index:10;}
 .to-lbl{font-size:10px;color:rgba(255,255,255,.45);text-align:center;margin-bottom:10px;letter-spacing:.5px;text-transform:uppercase;}
 .to-actions{display:flex;gap:7px;}
 .to-btn{flex:1;padding:12px 4px;border-radius:12px;border:none;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;}
@@ -352,7 +367,7 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 .cart-checkout{width:calc(100% - 44px);margin:14px 22px 0;padding:15px;border-radius:16px;border:none;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;cursor:pointer;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;gap:8px;}
 .cart-checkout svg{width:15px;height:15px;stroke:var(--bg);stroke-width:2.2;}
 
-/* ===== PHOTO PICKER OVERLAY ===== */
+/* OVERLAYS */
 .photo-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(12px);z-index:900;display:none;align-items:flex-end;}
 .photo-overlay.show{display:flex;}
 .photo-sheet{width:100%;background:var(--surface-modal);border-radius:32px 32px 0 0;padding:20px 22px 36px;border-top:1px solid var(--line);animation:slideUp .3s cubic-bezier(.32,.72,0,1);}
@@ -378,8 +393,6 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 .avatar-chip-img img{width:100%;height:100%;object-fit:cover;}
 .avatar-chip-lbl{font-size:11px;font-weight:600;color:var(--ink);}
 .avatar-chip-change{font-size:10px;color:var(--sand);font-weight:600;cursor:pointer;margin-left:4px;}
-
-/* QR SCANNER OVERLAY */
 .qr-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(14px);z-index:950;display:none;align-items:flex-end;}
 .qr-overlay.show{display:flex;}
 .qr-sheet{width:100%;background:var(--surface-modal);border-radius:32px 32px 0 0;padding:22px 22px 40px;border-top:1px solid var(--line);animation:slideUp .3s cubic-bezier(.32,.72,0,1);}
@@ -398,8 +411,6 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 .qr-hint{font-size:12px;color:var(--ink3);text-align:center;margin-bottom:20px;line-height:1.6;}
 .qr-hint b{color:var(--ink);}
 .qr-close-btn{width:100%;padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
-
-/* AI OVERLAY */
 .ai-overlay{position:absolute;inset:0;background:var(--bg);z-index:600;display:none;flex-direction:column;}
 .ai-overlay.show{display:flex;}
 .ai-scroll{flex:1;overflow-y:auto;padding:66px 18px 100px;scrollbar-width:none;}
@@ -420,8 +431,6 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 .ai-btn svg{width:11px;height:11px;stroke:currentColor;stroke-width:2.2;}
 .ai-btn-prim{background:var(--ink);color:var(--bg);}
 .ai-btn-sec{background:var(--bg);color:var(--ink);border:1px solid var(--line)!important;}
-
-/* SCHEDULE */
 .sched-overlay{position:absolute;inset:0;background:rgba(0,0,0,.3);backdrop-filter:blur(8px);z-index:700;display:none;align-items:flex-end;}
 .sched-overlay.show{display:flex;}
 .sched-sheet{width:100%;background:var(--surface-modal);border-radius:32px 32px 0 0;padding:20px 22px 36px;border-top:1px solid var(--line);animation:slideUp .3s cubic-bezier(.32,.72,0,1);position:relative;}
@@ -449,8 +458,6 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 .sd-date.on .sd-lbl,.sd-date.on .sd-num{color:var(--bg);}
 .sd-num{font-size:14px;font-weight:800;color:var(--ink);margin-top:2px;}
 .sched-confirm{width:100%;padding:14px;border-radius:12px;border:none;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;cursor:pointer;background:var(--ink);color:var(--bg);}
-
-/* DESIRE */
 .desire-overlay{position:absolute;inset:0;background:rgba(0,0,0,.28);backdrop-filter:blur(8px);z-index:500;display:none;align-items:flex-end;}
 .desire-overlay.show{display:flex;}
 .desire-sheet{width:100%;background:var(--surface-modal);border-radius:32px 32px 0 0;padding:18px 22px 32px;border-top:1px solid var(--line);animation:slideUp .3s cubic-bezier(.32,.72,0,1);position:relative;}
@@ -467,8 +474,6 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 .ds-prim{background:var(--ink);color:var(--bg);}
 .ds-prim svg{stroke:var(--bg);}
 .ds-sec{background:var(--bg2);color:var(--ink);border:1px solid var(--line);}
-
-/* SHARE */
 .share-overlay{position:absolute;inset:0;background:rgba(0,0,0,.28);backdrop-filter:blur(8px);z-index:800;display:none;align-items:flex-end;}
 .share-overlay.show{display:flex;}
 .share-sheet{width:100%;background:var(--surface-modal);border-radius:32px 32px 0 0;padding:20px 22px 36px;border-top:1px solid var(--line);animation:slideUp .3s cubic-bezier(.32,.72,0,1);position:relative;}
@@ -583,7 +588,7 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 .sp-line{height:1px;background:linear-gradient(to right,transparent,#0a0a0a,transparent);margin-top:26px;width:0;animation:grow 1.1s .45s ease forwards;}
 @keyframes grow{to{width:100px}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.toast{position:absolute;bottom:96px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:99px;font-size:11.5px;font-weight:600;z-index:9000;white-space:nowrap;opacity:0;transition:opacity .25s;pointer-events:none;}
+.toast{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:99px;font-size:11.5px;font-weight:600;z-index:9000;white-space:nowrap;opacity:0;transition:opacity .25s;pointer-events:none;}
 .toast.show{opacity:1;}
 #fileInput{display:none;}
 </style>
@@ -591,7 +596,7 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 <body>
 <div class="splash" id="splash">
   <div class="sp-logo">DEZEO</div>
-  <div class="sp-sub">¿Qué dezeas hoy?</div>
+  <div class="sp-sub">¿Qué desea hoy?</div>
   <div class="sp-line"></div>
 </div>
 <input type="file" id="fileInput" accept="image/*" onchange="handleFileUpload(event)">
@@ -625,7 +630,6 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
       <button class="btn-hero" onclick="go('tiendas');initTiendas()">
         <svg viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="currentColor" stroke-width="2"/></svg>Probar ahora
       </button>
-      <!-- QR BUTTON — adaptive colors via CSS vars -->
       <div class="btn-hero-sq" onclick="openQR()" title="Escanear prenda en tienda">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
           <rect x="3" y="3" width="7" height="7" rx="1" stroke="var(--qr-btn-stroke)"/>
@@ -640,10 +644,10 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
     </div>
   </div>
   <div class="stats-strip">
-    <div class="stat-item"><div class="stat-n">38</div><div class="stat-l">Prendas</div></div>
-    <div class="stat-item"><div class="stat-n">12</div><div class="stat-l">Outfits</div></div>
-    <div class="stat-item"><div class="stat-n">247</div><div class="stat-l">Pruebas</div></div>
-    <div class="stat-item"><div class="stat-n">1.2K</div><div class="stat-l">Seguid.</div></div>
+    <div class="stat-item"><div class="stat-n">56</div><div class="stat-l">Prendas</div></div>
+    <div class="stat-item"><div class="stat-n">18</div><div class="stat-l">Outfits</div></div>
+    <div class="stat-item"><div class="stat-n">412</div><div class="stat-l">Pruebas</div></div>
+    <div class="stat-item"><div class="stat-n">3.1K</div><div class="stat-l">Seguid.</div></div>
   </div>
   <div class="hot-row-wrap">
     <div class="sec-row" style="padding-right:22px">
@@ -660,6 +664,7 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
       <div class="chip" onclick="feedCat(this,'pantalones')">Pantalones</div>
       <div class="chip" onclick="feedCat(this,'chaquetas')">Chaquetas</div>
       <div class="chip" onclick="feedCat(this,'zapatos')">Zapatos</div>
+      <div class="chip" onclick="feedCat(this,'accesorios')">Accesorios</div>
     </div>
     <div class="pin-grid" id="pinGrid"></div>
   </div>
@@ -795,7 +800,7 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
   <div class="sched-sheet"><div class="sheet-pill"></div><div class="sheet-close" onclick="closeSched()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div><div class="s-title">Programar</div><div class="s-sub">Elige el día para este look</div><div class="s-preview"><div class="s-preview-img"><img id="sched-img" src="" alt=""></div><div><div class="s-preview-name" id="sched-name"></div><div class="s-preview-brand" id="sched-brand"></div></div></div><div class="s-month-nav"><div class="s-month-btn" onclick="schedMonthNav(-1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"/></svg></div><div class="s-month-lbl" id="schedMonthLbl"></div><div class="s-month-btn" onclick="schedMonthNav(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"/></svg></div></div><div class="sched-dates" id="schedDates"></div><button class="sched-confirm" onclick="confirmSched()">Confirmar</button></div>
 </div>
 
-<!-- DESIRE OVERLAY -->
+<!-- DESIRE -->
 <div class="desire-overlay" id="desireOverlay" onclick="closeDesireEv(event)">
   <div class="desire-sheet"><div class="sheet-pill"></div><div style="position:absolute;top:14px;right:18px;background:var(--bg2);border:1px solid var(--line);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="closeDesire()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:13px;height:13px;stroke:var(--ink3);stroke-width:2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
     <div class="ds-product"><div class="ds-thumb"><img id="ds-img" src="" alt=""></div><div><div class="ds-pname" id="ds-pname"></div><div class="ds-pbrand" id="ds-pbrand"></div><div class="ds-pprice" id="ds-pprice"></div></div></div>
@@ -810,7 +815,7 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
   </div>
 </div>
 
-<!-- PHOTO PICKER OVERLAY -->
+<!-- PHOTO PICKER -->
 <div class="photo-overlay" id="photoOverlay" onclick="closePhotoPickerEv(event)">
   <div class="photo-sheet">
     <div class="photo-pill"></div>
@@ -842,41 +847,21 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
   </div>
 </div>
 
-<!-- QR SCANNER OVERLAY -->
+<!-- QR SCANNER -->
 <div class="qr-overlay" id="qrOverlay" onclick="closeQREv(event)">
   <div class="qr-sheet">
     <div class="qr-pill"></div>
     <div style="position:absolute;top:14px;right:18px;background:var(--bg2);border:1px solid var(--line);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="closeQR()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:13px;height:13px;stroke:var(--ink3);stroke-width:2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
     <div class="qr-ttl">Escanear en tienda</div>
-    <div class="qr-sub">Apunta al código QR de la prenda para probarla al instante</div>
+    <div class="qr-sub">Apunta al código QR de la prenda</div>
     <div class="qr-frame">
       <div class="qr-frame-inner">
-        <svg viewBox="0 0 100 100" width="120" height="120" style="opacity:.18">
-          <rect x="10" y="10" width="30" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="3"/>
-          <rect x="16" y="16" width="18" height="18" rx="2" fill="currentColor"/>
-          <rect x="60" y="10" width="30" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="3"/>
-          <rect x="66" y="16" width="18" height="18" rx="2" fill="currentColor"/>
-          <rect x="10" y="60" width="30" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="3"/>
-          <rect x="16" y="66" width="18" height="18" rx="2" fill="currentColor"/>
-          <rect x="50" y="50" width="6" height="6" fill="currentColor"/>
-          <rect x="60" y="50" width="6" height="6" fill="currentColor"/>
-          <rect x="70" y="50" width="6" height="6" fill="currentColor"/>
-          <rect x="80" y="50" width="6" height="6" fill="currentColor"/>
-          <rect x="50" y="60" width="6" height="6" fill="currentColor"/>
-          <rect x="70" y="60" width="6" height="6" fill="currentColor"/>
-          <rect x="60" y="70" width="6" height="6" fill="currentColor"/>
-          <rect x="80" y="70" width="6" height="6" fill="currentColor"/>
-          <rect x="50" y="80" width="6" height="6" fill="currentColor"/>
-          <rect x="60" y="80" width="6" height="6" fill="currentColor"/>
-          <rect x="80" y="80" width="6" height="6" fill="currentColor"/>
-        </svg>
+        <svg viewBox="0 0 100 100" width="120" height="120" style="opacity:.18"><rect x="10" y="10" width="30" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><rect x="16" y="16" width="18" height="18" rx="2" fill="currentColor"/><rect x="60" y="10" width="30" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><rect x="66" y="16" width="18" height="18" rx="2" fill="currentColor"/><rect x="10" y="60" width="30" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><rect x="16" y="66" width="18" height="18" rx="2" fill="currentColor"/><rect x="50" y="50" width="6" height="6" fill="currentColor"/><rect x="60" y="50" width="6" height="6" fill="currentColor"/><rect x="70" y="50" width="6" height="6" fill="currentColor"/><rect x="80" y="50" width="6" height="6" fill="currentColor"/></svg>
         <div class="qr-scan-line"></div>
       </div>
-      <div class="qr-corners"></div>
-      <div class="qr-extra"></div>
-      <div class="qr-extra2"></div>
+      <div class="qr-corners"></div><div class="qr-extra"></div><div class="qr-extra2"></div>
     </div>
-    <div class="qr-hint">Escanea el código QR de cualquier prenda en tienda<br>y podrás <b>probártela virtualmente</b> sin quitarte la ropa</div>
+    <div class="qr-hint">Escanea el QR de cualquier prenda<br>y <b>pruébatela virtualmente</b> al instante</div>
     <button class="qr-close-btn" onclick="closeQR();toast('Simulando escaneo: Nike Tech Fleece detectada');setTimeout(()=>{openProductFromQR()},800)">Simular escaneo</button>
   </div>
 </div>
@@ -901,7 +886,7 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 <!-- PERFIL -->
 <div class="screen" id="s-perfil">
   <div class="prof-hero"><img src="https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=800" alt=""><div class="prof-hero-grad"></div><div class="top-bar"><div style="width:36px"></div><div class="icon-btn" onclick="openShareModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div></div><div class="prof-info"><div class="prof-name">Sebastián Morales</div><div class="prof-handle">@sebas.dezeo · Verificado</div><div class="prof-acts"><button class="pa-btn pa-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar perfil</button><button class="pa-btn pa-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></button><button class="pa-btn pa-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></div></div></div>
-  <div class="prof-sheet"><div class="prof-stats"><div class="prof-stat"><div class="pst-n">38</div><div class="pst-l">Prendas</div></div><div class="prof-stat"><div class="pst-n">12</div><div class="pst-l">Outfits</div></div><div class="prof-stat"><div class="pst-n">1.2K</div><div class="pst-l">Seguid.</div></div><div class="prof-stat"><div class="pst-n" id="favCount">0</div><div class="pst-l">Favoritos</div></div></div><div class="dna-box"><div class="dna-lbl">ADN de estilo</div><div class="dna-tags"><div class="dna-t hi">Street</div><div class="dna-t">Urban</div><div class="dna-t hi">Nike</div><div class="dna-t">Sport Luxe</div><div class="dna-t">Dark Tones</div></div></div><div class="pinned-section" id="myPinnedSection"></div><div class="prof-tabs"><div class="prof-tab on" onclick="profTab(this,'outfits')">Outfits</div><div class="prof-tab" onclick="profTab(this,'favs')">Favoritos</div></div><div id="profOutfitsGrid" class="outfit-grid"></div><div id="profFavsGrid" class="fav-grid" style="display:none"></div></div>
+  <div class="prof-sheet"><div class="prof-stats"><div class="prof-stat"><div class="pst-n">56</div><div class="pst-l">Prendas</div></div><div class="prof-stat"><div class="pst-n">18</div><div class="pst-l">Outfits</div></div><div class="prof-stat"><div class="pst-n">3.1K</div><div class="pst-l">Seguid.</div></div><div class="prof-stat"><div class="pst-n" id="favCount">0</div><div class="pst-l">Favoritos</div></div></div><div class="dna-box"><div class="dna-lbl">ADN de estilo</div><div class="dna-tags"><div class="dna-t hi">Street</div><div class="dna-t">Urban</div><div class="dna-t hi">Nike</div><div class="dna-t">Sport Luxe</div><div class="dna-t">Dark Tones</div></div></div><div class="pinned-section" id="myPinnedSection"></div><div class="prof-tabs"><div class="prof-tab on" onclick="profTab(this,'outfits')">Outfits</div><div class="prof-tab" onclick="profTab(this,'favs')">Favoritos</div></div><div id="profOutfitsGrid" class="outfit-grid"></div><div id="profFavsGrid" class="fav-grid" style="display:none"></div></div>
 </div>
 
 <!-- OUTFIT DETAIL -->
@@ -918,13 +903,28 @@ body{background:#1a1a1a;display:flex;justify-content:center;align-items:center;m
 
 <div class="toast" id="toastEl"></div>
 
-<!-- NAVBAR -->
+<!-- FLOATING NAVBAR -->
 <div class="navbar">
-  <div class="nav-item active" id="n-home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Inicio</span><div class="nav-dot"></div></div>
-  <div class="nav-item" id="n-buscar" onclick="go('buscar');initSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Buscar</span><div class="nav-dot"></div></div>
-  <div class="nav-item" id="n-armario" onclick="go('armario')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="2" width="18" height="20" rx="2"/><path d="M9 2v20M3 12h18"/></svg><span>Armario</span><div class="nav-dot"></div></div>
-  <div class="nav-item" id="n-tiendas" onclick="go('tiendas');initTiendas()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span>Tiendas</span><div class="nav-dot"></div></div>
-  <div class="nav-item" id="n-perfil" onclick="go('perfil');initPerfil()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span><div class="nav-dot"></div></div>
+  <div class="nav-item active" id="n-home" onclick="go('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="nav-lbl">Inicio</span>
+  </div>
+  <div class="nav-item" id="n-buscar" onclick="go('buscar');initSearch()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <span class="nav-lbl">Buscar</span>
+  </div>
+  <div class="nav-item" id="n-armario" onclick="go('armario')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="2" width="18" height="20" rx="2"/><path d="M9 2v20M3 12h18"/></svg>
+    <span class="nav-lbl">Armario</span>
+  </div>
+  <div class="nav-item" id="n-tiendas" onclick="go('tiendas');initTiendas()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <span class="nav-lbl">Tiendas</span>
+  </div>
+  <div class="nav-item" id="n-perfil" onclick="go('perfil');initPerfil()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span class="nav-lbl">Perfil</span>
+  </div>
 </div>
 </div>
 
@@ -940,6 +940,8 @@ const G={
   m6:'https://images.pexels.com/photos/1484807/pexels-photo-1484807.jpeg?auto=compress&cs=tinysrgb&w=600',
   m7:'https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg?auto=compress&cs=tinysrgb&w=600',
   m8:'https://images.pexels.com/photos/2220316/pexels-photo-2220316.jpeg?auto=compress&cs=tinysrgb&w=600',
+  m9:'https://images.pexels.com/photos/1036622/pexels-photo-1036622.jpeg?auto=compress&cs=tinysrgb&w=600',
+  m10:'https://images.pexels.com/photos/1381556/pexels-photo-1381556.jpeg?auto=compress&cs=tinysrgb&w=600',
   g1:'https://images.pexels.com/photos/1021693/pexels-photo-1021693.jpeg?auto=compress&cs=tinysrgb&w=400',
   g2:'https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=400',
   g3:'https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -947,16 +949,97 @@ const G={
   g5:'https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg?auto=compress&cs=tinysrgb&w=400',
   g6:'https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=400',
   g7:'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=400',
+  g8:'https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=400',
+  g9:'https://images.pexels.com/photos/934063/pexels-photo-934063.jpeg?auto=compress&cs=tinysrgb&w=400',
+  g10:'https://images.pexels.com/photos/1300550/pexels-photo-1300550.jpeg?auto=compress&cs=tinysrgb&w=400',
+  g11:'https://images.pexels.com/photos/842811/pexels-photo-842811.jpeg?auto=compress&cs=tinysrgb&w=400',
+  g12:'https://images.pexels.com/photos/1381556/pexels-photo-1381556.jpeg?auto=compress&cs=tinysrgb&w=400',
 };
 const AVATAR_DEFAULT='https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=800';
 let userPhotoSrc=AVATAR_DEFAULT;
 
 const STORES={
-  nike:{key:'nike',logo:'Nike',name:'Nike',sub:'Sport · Street · Lifestyle',followers:'2.4M',hero:'https://images.pexels.com/photos/934063/pexels-photo-934063.jpeg?auto=compress&cs=tinysrgb&w=800',hotOutfits:[{name:'All Nike Everything',img:G.m1,likes:18400},{name:'Air Max Day',img:G.m4,likes:12100},{name:'Tech Street',img:G.m8,likes:9800},{name:'Forum Classics',img:G.m7,likes:7200}],items:[{id:'n1',cat:'camisetas',name:'Dri-FIT Tee',price:'$89.900',orig:'',img:G.g1,sizes:['XS','S','M','L','XL'],colors:['#111','#f0ede8','#c8b89a'],desc:'Camiseta técnica de secado rápido.',specs:{Material:'Poliéster reciclado',Corte:'Regular fit'}},{id:'n2',cat:'chaquetas',name:'Tech Fleece Jacket',price:'$289.900',orig:'$349.900',img:G.g5,sizes:['S','M','L','XL','XXL'],colors:['#111','#333','#2d4a1e'],desc:'Doble capa de fleece.',specs:{Material:'Fleece 65% algodón',Corte:'Slim fit'}},{id:'n3',cat:'pantalones',name:'Club Cargo Pants',price:'$199.900',orig:'',img:G.g2,sizes:['28','30','32','34','36'],colors:['#111','#3d3d3d','#c8b89a'],desc:'Cargo con múltiples bolsillos.',specs:{Material:'100% algodón',Corte:'Relaxed fit'}},{id:'n4',cat:'zapatos',name:'Air Max 270',price:'$389.900',orig:'',img:G.g3,sizes:['38','39','40','41','42','43','44'],colors:['#111','#f0ede8','#ff453a'],desc:'La mayor unidad Air.',specs:{Upper:'Malla transpirable',Suela:'Foam React'}},{id:'n5',cat:'accesorios',name:'Heritage Cap',price:'$79.900',orig:'',img:G.g6,sizes:['Única'],colors:['#111','#f0ede8'],desc:'Gorra clásica Swoosh.',specs:{Material:'100% algodón',Cierre:'Snapback'}}]},
-  adidas:{key:'adidas',logo:'Adidas',name:'Adidas',sub:'Sport · Lifestyle · Originals',followers:'1.8M',hero:'https://images.pexels.com/photos/1860196/pexels-photo-1860196.jpeg?auto=compress&cs=tinysrgb&w=800',hotOutfits:[{name:'Forum Fit',img:G.m2,likes:22300},{name:'SST Classic',img:G.m5,likes:14500},{name:'Originals Day',img:G.m3,likes:11200},{name:'3-Stripe Edit',img:G.m6,likes:8900}],items:[{id:'a1',cat:'camisetas',name:'Trefoil Tee',price:'$79.900',orig:'',img:G.g1,sizes:['XS','S','M','L','XL'],colors:['#f0ede8','#111'],desc:'Logo Trefoil clásico.',specs:{Material:'100% algodón',Corte:'Regular fit'}},{id:'a2',cat:'chaquetas',name:'SST Track Jacket',price:'$459.900',orig:'$529.900',img:G.g7,sizes:['S','M','L','XL'],colors:['#111','#1a3a6b'],desc:'Icónica con las 3 rayas.',specs:{Material:'Poliéster 100%'}},{id:'a3',cat:'pantalones',name:'Tiro Track Pants',price:'$179.900',orig:'',img:G.g2,sizes:['S','M','L','XL'],colors:['#111','#1a3a6b'],desc:'Tecnología AEROREADY.',specs:{Material:'Reciclado 50%'}},{id:'a4',cat:'zapatos',name:'Forum Low',price:'$349.900',orig:'',img:G.g3,sizes:['38','39','40','41','42','43'],colors:['#f0ede8','#111'],desc:'Icónico desde 1984.',specs:{Upper:'Cuero genuino',Suela:'Goma'}}]},
-  zara:{key:'zara',logo:'Zara',name:'Zara',sub:'Formal · Trendy · Editorial',followers:'3.1M',hero:G.m8,hotOutfits:[{name:'Linen Season',img:G.m4,likes:9700},{name:'Editorial Black',img:G.m8,likes:16800},{name:'Chelsea Vibes',img:G.m6,likes:8400}],items:[{id:'z1',cat:'camisetas',name:'Linen Overshirt',price:'$149.900',orig:'',img:G.g1,sizes:['XS','S','M','L','XL'],colors:['#c8b89a','#f0ede8','#111'],desc:'Lino, botones nácar.',specs:{Material:'100% lino'}},{id:'z2',cat:'chaquetas',name:'Linen Blazer',price:'$299.900',orig:'$389.900',img:G.g7,sizes:['XS','S','M','L'],colors:['#c8b89a','#111'],desc:'Blazer estructurado.',specs:{Material:'55% lino, 45% viscosa'}},{id:'z3',cat:'pantalones',name:'Slim Cargo',price:'$129.900',orig:'',img:G.g2,sizes:['28','30','32','34'],colors:['#111','#3d3d3d'],desc:'Slim fit.',specs:{Material:'98% algodón'}},{id:'z4',cat:'zapatos',name:'Chelsea Boot',price:'$399.900',orig:'',img:G.g3,sizes:['39','40','41','42','43','44'],colors:['#111','#3d1c00'],desc:'Cuero genuino.',specs:{Upper:'Cuero genuino',Tacón:'3cm'}}]},
-  koaj:{key:'koaj',logo:'Koaj',name:'Koaj',sub:'Casual · Colombia · Everyday',followers:'890K',hero:G.m3,hotOutfits:[{name:'Koaj Casual',img:G.m3,likes:5600},{name:'Weekend Look',img:G.m5,likes:4100}],items:[{id:'k1',cat:'camisetas',name:'Basic Tee',price:'$49.900',orig:'',img:G.g1,sizes:['S','M','L','XL','XXL'],colors:['#111','#f0ede8','#c8b89a'],desc:'Algodón suave.',specs:{Material:'100% algodón'}},{id:'k2',cat:'chaquetas',name:'Puffer Jacket',price:'$189.900',orig:'$249.900',img:G.g4,sizes:['S','M','L','XL'],colors:['#111','#1a3a6b'],desc:'Ligera.',specs:{Material:'Poliéster'}},{id:'k3',cat:'pantalones',name:'Chino Slim',price:'$119.900',orig:'',img:G.g2,sizes:['28','30','32','34','36'],colors:['#c8b89a','#111'],desc:'Stretch suave.',specs:{Material:'97% algodón, 3% elastano'}},{id:'k4',cat:'accesorios',name:'Varsity Cap',price:'$39.900',orig:'',img:G.g6,sizes:['Única'],colors:['#111','#1a3a6b'],desc:'Bordado frontal.',specs:{Material:'100% algodón'}}]}
+  nike:{key:'nike',logo:'Nike',name:'Nike',sub:'Sport · Street · Lifestyle',followers:'2.4M',hero:'https://images.pexels.com/photos/934063/pexels-photo-934063.jpeg?auto=compress&cs=tinysrgb&w=800',hotOutfits:[{name:'All Nike Everything',img:G.m1,likes:18400},{name:'Air Max Day',img:G.m4,likes:12100},{name:'Tech Street',img:G.m8,likes:9800}],
+  items:[
+    {id:'n1',cat:'camisetas',name:'Dri-FIT Tee',price:'$89.900',orig:'',img:G.g1,sizes:['XS','S','M','L','XL'],colors:['#111','#f0ede8','#c8b89a'],desc:'Camiseta técnica de secado rápido con tecnología Dri-FIT.',specs:{Material:'Poliéster reciclado',Corte:'Regular fit'}},
+    {id:'n2',cat:'chaquetas',name:'Tech Fleece Jacket',price:'$289.900',orig:'$349.900',img:G.g5,sizes:['S','M','L','XL','XXL'],colors:['#111','#333','#2d4a1e'],desc:'Doble capa de fleece ligera y cálida.',specs:{Material:'Fleece 65% algodón',Corte:'Slim fit'}},
+    {id:'n3',cat:'pantalones',name:'Club Cargo Pants',price:'$199.900',orig:'',img:G.g2,sizes:['28','30','32','34','36'],colors:['#111','#3d3d3d','#c8b89a'],desc:'Cargo con múltiples bolsillos funcionales.',specs:{Material:'100% algodón',Corte:'Relaxed fit'}},
+    {id:'n4',cat:'zapatos',name:'Air Max 270',price:'$389.900',orig:'',img:G.g3,sizes:['38','39','40','41','42','43','44'],colors:['#111','#f0ede8','#ff453a'],desc:'La mayor unidad Air de Nike.',specs:{Upper:'Malla transpirable',Suela:'Foam React'}},
+    {id:'n5',cat:'accesorios',name:'Heritage Cap',price:'$79.900',orig:'',img:G.g6,sizes:['Única'],colors:['#111','#f0ede8'],desc:'Gorra clásica con logo Swoosh bordado.',specs:{Material:'100% algodón',Cierre:'Snapback'}},
+    {id:'n6',cat:'camisetas',name:'Club Hoodie',price:'$159.900',orig:'$199.900',img:G.g8,sizes:['XS','S','M','L','XL'],colors:['#111','#c8b89a','#1a3a6b'],desc:'Sudadera cómoda con canguro frontal.',specs:{Material:'80% algodón, 20% poliéster',Corte:'Oversized'}},
+    {id:'n7',cat:'zapatos',name:'Air Force 1 Low',price:'$349.900',orig:'',img:G.g9,sizes:['38','39','40','41','42','43','44','45'],colors:['#f0ede8','#111','#c8b89a'],desc:'El icónico clásico de cancha desde 1982.',specs:{Upper:'Cuero genuino',Suela:'Goma duradera'}},
+    {id:'n8',cat:'pantalones',name:'Sportswear Jogger',price:'$169.900',orig:'',img:G.g10,sizes:['S','M','L','XL'],colors:['#111','#3d3d3d'],desc:'Jogger cómodo para el día a día.',specs:{Material:'Fleece 80% algodón',Corte:'Tapered'}},
+  ]},
+  adidas:{key:'adidas',logo:'Adidas',name:'Adidas',sub:'Sport · Lifestyle · Originals',followers:'1.8M',hero:'https://images.pexels.com/photos/1860196/pexels-photo-1860196.jpeg?auto=compress&cs=tinysrgb&w=800',hotOutfits:[{name:'Forum Fit',img:G.m2,likes:22300},{name:'SST Classic',img:G.m5,likes:14500},{name:'Originals Day',img:G.m3,likes:11200}],
+  items:[
+    {id:'a1',cat:'camisetas',name:'Trefoil Tee',price:'$79.900',orig:'',img:G.g1,sizes:['XS','S','M','L','XL'],colors:['#f0ede8','#111'],desc:'Logo Trefoil clásico en 100% algodón.',specs:{Material:'100% algodón',Corte:'Regular fit'}},
+    {id:'a2',cat:'chaquetas',name:'SST Track Jacket',price:'$459.900',orig:'$529.900',img:G.g7,sizes:['S','M','L','XL'],colors:['#111','#1a3a6b'],desc:'Icónica chaqueta con las 3 rayas.',specs:{Material:'Poliéster 100%'}},
+    {id:'a3',cat:'pantalones',name:'Tiro Track Pants',price:'$179.900',orig:'',img:G.g2,sizes:['S','M','L','XL'],colors:['#111','#1a3a6b'],desc:'Tecnología AEROREADY para mayor frescura.',specs:{Material:'Reciclado 50%'}},
+    {id:'a4',cat:'zapatos',name:'Forum Low',price:'$349.900',orig:'',img:G.g3,sizes:['38','39','40','41','42','43'],colors:['#f0ede8','#111'],desc:'Icónico desde 1984, el básico de Originals.',specs:{Upper:'Cuero genuino',Suela:'Goma'}},
+    {id:'a5',cat:'chaquetas',name:'Puffer Jacket',price:'$389.900',orig:'$449.900',img:G.g4,sizes:['S','M','L','XL'],colors:['#111','#1a3a6b','#2d4a1e'],desc:'Puffer ligero con relleno sintético.',specs:{Material:'Poliéster reciclado'}},
+    {id:'a6',cat:'accesorios',name:'Classic Beanie',price:'$59.900',orig:'',img:G.g6,sizes:['Única'],colors:['#111','#f0ede8','#1a3a6b'],desc:'Gorro de punto con logo bordado.',specs:{Material:'100% acrílico'}},
+    {id:'a7',cat:'camisetas',name:'Essentials 3-Stripes',price:'$99.900',orig:'',img:G.g11,sizes:['XS','S','M','L','XL','XXL'],colors:['#111','#f0ede8','#c8b89a'],desc:'Hoodie esencial con las 3 rayas.',specs:{Material:'70% algodón, 30% reciclado',Corte:'Regular'}},
+    {id:'a8',cat:'zapatos',name:'Stan Smith',price:'$299.900',orig:'',img:G.g12,sizes:['38','39','40','41','42','43','44'],colors:['#f0ede8','#111'],desc:'El tenis más icónico de todos los tiempos.',specs:{Upper:'Cuero genuino',Suela:'Goma translúcida'}},
+  ]},
+  zara:{key:'zara',logo:'Zara',name:'Zara',sub:'Formal · Trendy · Editorial',followers:'3.1M',hero:G.m8,hotOutfits:[{name:'Linen Season',img:G.m4,likes:9700},{name:'Editorial Black',img:G.m8,likes:16800},{name:'Chelsea Vibes',img:G.m6,likes:8400}],
+  items:[
+    {id:'z1',cat:'camisetas',name:'Linen Overshirt',price:'$149.900',orig:'',img:G.g1,sizes:['XS','S','M','L','XL'],colors:['#c8b89a','#f0ede8','#111'],desc:'Lino con botones de nácar.',specs:{Material:'100% lino'}},
+    {id:'z2',cat:'chaquetas',name:'Linen Blazer',price:'$299.900',orig:'$389.900',img:G.g7,sizes:['XS','S','M','L'],colors:['#c8b89a','#111'],desc:'Blazer estructurado en mezcla de lino.',specs:{Material:'55% lino, 45% viscosa'}},
+    {id:'z3',cat:'pantalones',name:'Slim Cargo',price:'$129.900',orig:'',img:G.g2,sizes:['28','30','32','34'],colors:['#111','#3d3d3d'],desc:'Slim fit con bolsillos laterales.',specs:{Material:'98% algodón'}},
+    {id:'z4',cat:'zapatos',name:'Chelsea Boot',price:'$399.900',orig:'',img:G.g3,sizes:['39','40','41','42','43','44'],colors:['#111','#3d1c00'],desc:'Cuero genuino con elásticos laterales.',specs:{Upper:'Cuero genuino',Tacón:'3cm'}},
+    {id:'z5',cat:'camisetas',name:'Knit Polo',price:'$119.900',orig:'$159.900',img:G.g8,sizes:['XS','S','M','L','XL'],colors:['#f0ede8','#111','#c8b89a'],desc:'Polo de punto con detalles sutiles.',specs:{Material:'100% algodón peinado'}},
+    {id:'z6',cat:'accesorios',name:'Leather Belt',price:'$89.900',orig:'',img:G.g6,sizes:['S','M','L'],colors:['#111','#3d1c00'],desc:'Cinturón de cuero genuino.',specs:{Material:'100% cuero',Hebilla:'Níquel'}},
+    {id:'z7',cat:'pantalones',name:'Tailored Trousers',price:'$179.900',orig:'',img:G.g10,sizes:['28','30','32','34','36'],colors:['#c8b89a','#111','#3d3d3d'],desc:'Pantalón de sastre con caída perfecta.',specs:{Material:'60% viscosa, 40% lino'}},
+    {id:'z8',cat:'chaquetas',name:'Bomber Jacket',price:'$259.900',orig:'',img:G.g4,sizes:['XS','S','M','L'],colors:['#111','#2d4a1e','#3d1c00'],desc:'Bomber con puños y cintura de punto.',specs:{Material:'100% nylon'}},
+  ]},
+  koaj:{key:'koaj',logo:'Koaj',name:'Koaj',sub:'Casual · Colombia · Everyday',followers:'890K',hero:G.m3,hotOutfits:[{name:'Koaj Casual',img:G.m3,likes:5600},{name:'Weekend Look',img:G.m5,likes:4100}],
+  items:[
+    {id:'k1',cat:'camisetas',name:'Basic Tee',price:'$49.900',orig:'',img:G.g1,sizes:['S','M','L','XL','XXL'],colors:['#111','#f0ede8','#c8b89a'],desc:'Camiseta básica en algodón suave.',specs:{Material:'100% algodón'}},
+    {id:'k2',cat:'chaquetas',name:'Puffer Jacket',price:'$189.900',orig:'$249.900',img:G.g4,sizes:['S','M','L','XL'],colors:['#111','#1a3a6b'],desc:'Chaqueta ligera con relleno sintético.',specs:{Material:'Poliéster'}},
+    {id:'k3',cat:'pantalones',name:'Chino Slim',price:'$119.900',orig:'',img:G.g2,sizes:['28','30','32','34','36'],colors:['#c8b89a','#111'],desc:'Chino stretch de ajuste cómodo.',specs:{Material:'97% algodón, 3% elastano'}},
+    {id:'k4',cat:'accesorios',name:'Varsity Cap',price:'$39.900',orig:'',img:G.g6,sizes:['Única'],colors:['#111','#1a3a6b'],desc:'Gorra universitaria con bordado frontal.',specs:{Material:'100% algodón',Cierre:'Snapback'}},
+  ]},
+  hm:{key:'hm',logo:'H&M',name:'H&M',sub:'Trends · Basics · Sustainable',followers:'4.2M',hero:G.m9,hotOutfits:[{name:'H&M Casual',img:G.m9,likes:31200},{name:'Basics Edit',img:G.m5,likes:18700},{name:'Conscious Collection',img:G.m3,likes:14500}],
+  items:[
+    {id:'h1',cat:'camisetas',name:'Relaxed Hoodie',price:'$99.900',orig:'',img:G.g11,sizes:['XS','S','M','L','XL','XXL'],colors:['#c8b89a','#111','#f0ede8'],desc:'Sudadera relaxed de tejido suave orgánico.',specs:{Material:'85% algodón orgánico',Corte:'Oversized'}},
+    {id:'h2',cat:'pantalones',name:'Wide Leg Jeans',price:'$149.900',orig:'$189.900',img:G.g2,sizes:['28','30','32','34','36'],colors:['#4a5568','#111'],desc:'Jeans de pierna ancha con lavado vintage.',specs:{Material:'100% algodón',Corte:'Wide leg'}},
+    {id:'h3',cat:'chaquetas',name:'Denim Jacket',price:'$199.900',orig:'',img:G.g7,sizes:['XS','S','M','L','XL'],colors:['#4a5568','#111','#c8b89a'],desc:'Chaqueta de mezclilla clásica con lavado oscuro.',specs:{Material:'100% algodón',Corte:'Regular fit'}},
+    {id:'h4',cat:'zapatos',name:'Desert Boot',price:'$249.900',orig:'',img:G.g3,sizes:['38','39','40','41','42','43'],colors:['#c8b89a','#111'],desc:'Bota de gamuza con suela de crepé.',specs:{Upper:'Gamuza genuina',Suela:'Crepé natural'}},
+    {id:'h5',cat:'camisetas',name:'Linen Shirt',price:'$119.900',orig:'$149.900',img:G.g1,sizes:['XS','S','M','L','XL'],colors:['#f0ede8','#111','#c8b89a'],desc:'Camisa de lino con tejido aireado.',specs:{Material:'100% lino',Corte:'Relaxed'}},
+    {id:'h6',cat:'accesorios',name:'Canvas Tote',price:'$69.900',orig:'',img:G.g6,sizes:['Única'],colors:['#f0ede8','#111'],desc:'Bolso tote de canvas resistente.',specs:{Material:'100% algodón canvas',Capacidad:'20L'}},
+    {id:'h7',cat:'pantalones',name:'Cargo Shorts',price:'$89.900',orig:'',img:G.g10,sizes:['28','30','32','34','36'],colors:['#c8b89a','#111','#3d3d3d'],desc:'Shorts cargo con múltiples bolsillos.',specs:{Material:'100% algodón',Largo:'Sobre la rodilla'}},
+    {id:'h8',cat:'chaquetas',name:'Fleece Zip',price:'$159.900',orig:'$199.900',img:G.g4,sizes:['S','M','L','XL'],colors:['#111','#c8b89a','#1a3a6b'],desc:'Fleece con cierre completo y bolsillos.',specs:{Material:'100% poliéster reciclado'}},
+  ]},
+  bershka:{key:'bershka',logo:'Bershka',name:'Bershka',sub:'Youth · Trendy · Edgy',followers:'2.8M',hero:G.m10,hotOutfits:[{name:'Y2K Revival',img:G.m10,likes:28900},{name:'Dark Academia',img:G.m8,likes:19400},{name:'Soft Grunge',img:G.m6,likes:16700}],
+  items:[
+    {id:'b1',cat:'camisetas',name:'Graphic Tee',price:'$59.900',orig:'',img:G.g1,sizes:['XS','S','M','L','XL'],colors:['#111','#f0ede8','#c8b89a'],desc:'Camiseta con gráfico vintage de gran tamaño.',specs:{Material:'100% algodón',Corte:'Oversized'}},
+    {id:'b2',cat:'pantalones',name:'Baggy Jeans',price:'$169.900',orig:'$219.900',img:G.g2,sizes:['26','28','30','32','34'],colors:['#4a5568','#111'],desc:'Jeans baggy con lavado 90s.',specs:{Material:'100% algodón',Corte:'Baggy fit'}},
+    {id:'b3',cat:'chaquetas',name:'Faux Leather Jacket',price:'$289.900',orig:'',img:G.g7,sizes:['XS','S','M','L'],colors:['#111','#3d1c00'],desc:'Cazadora de cuero sintético estilo moto.',specs:{Material:'100% poliuretano',Forro:'100% poliéster'}},
+    {id:'b4',cat:'zapatos',name:'Platform Sneaker',price:'$219.900',orig:'$279.900',img:G.g3,sizes:['36','37','38','39','40','41','42'],colors:['#f0ede8','#111'],desc:'Sneaker de plataforma con suela chunky.',specs:{Upper:'Material sintético',Plataforma:'5cm'}},
+    {id:'b5',cat:'camisetas',name:'Ribbed Crop Top',price:'$49.900',orig:'',img:G.g8,sizes:['XS','S','M','L'],colors:['#111','#c8b89a','#f0ede8'],desc:'Top acanalado de manga larga.',specs:{Material:'95% viscosa, 5% elastano',Corte:'Crop fit'}},
+    {id:'b6',cat:'accesorios',name:'Bucket Hat',price:'$49.900',orig:'',img:G.g6,sizes:['Única'],colors:['#111','#c8b89a','#1a3a6b'],desc:'Bucket hat reversible con logo.',specs:{Material:'100% algodón'}},
+    {id:'b7',cat:'pantalones',name:'Straight Cargos',price:'$139.900',orig:'',img:G.g10,sizes:['XS','S','M','L','XL'],colors:['#111','#c8b89a','#3d3d3d'],desc:'Pantalones cargo de corte recto.',specs:{Material:'98% algodón, 2% elastano',Corte:'Straight'}},
+    {id:'b8',cat:'chaquetas',name:'Varsity Jacket',price:'$259.900',orig:'$319.900',img:G.g4,sizes:['S','M','L','XL'],colors:['#111','#1a3a6b','#8b0000'],desc:'Bomber universitario con parches y letras.',specs:{Cuerpo:'Lana sintética',Mangas:'Cuero sintético'}},
+  ]},
+  pull:{key:'pull',logo:'P&B',name:'Pull & Bear',sub:'Casual · Surfer · Street',followers:'1.5M',hero:G.m2,hotOutfits:[{name:'Beach Vibes',img:G.m2,likes:11200},{name:'Sunset Session',img:G.m4,likes:8900}],
+  items:[
+    {id:'p1',cat:'camisetas',name:'Surf Tee',price:'$69.900',orig:'',img:G.g1,sizes:['XS','S','M','L','XL'],colors:['#f0ede8','#111','#c8b89a'],desc:'Camiseta estampada con diseño surfer.',specs:{Material:'100% algodón',Corte:'Regular'}},
+    {id:'p2',cat:'pantalones',name:'Linen Shorts',price:'$99.900',orig:'$129.900',img:G.g2,sizes:['28','30','32','34'],colors:['#c8b89a','#f0ede8','#111'],desc:'Shorts de lino ligeros para verano.',specs:{Material:'100% lino',Largo:'Encima de la rodilla'}},
+    {id:'p3',cat:'chaquetas',name:'Overshirt Check',price:'$189.900',orig:'',img:G.g7,sizes:['S','M','L','XL'],colors:['#c8b89a','#111'],desc:'Overshirt de cuadros en tejido cómodo.',specs:{Material:'60% algodón, 40% poliéster'}},
+    {id:'p4',cat:'zapatos',name:'Canvas Slip-On',price:'$129.900',orig:'',img:G.g3,sizes:['38','39','40','41','42','43','44'],colors:['#111','#f0ede8','#c8b89a'],desc:'Slip-on de lona ultraligero.',specs:{Upper:'100% lona',Suela:'Goma vulcanizada'}},
+    {id:'p5',cat:'accesorios',name:'Woven Bag',price:'$89.900',orig:'',img:G.g6,sizes:['Única'],colors:['#c8b89a','#111'],desc:'Bolso de rafia tejida a mano.',specs:{Material:'100% rafia natural'}},
+    {id:'p6',cat:'camisetas',name:'Stripe Polo',price:'$89.900',orig:'',img:G.g8,sizes:['XS','S','M','L','XL'],colors:['#f0ede8','#1a3a6b'],desc:'Polo a rayas de tejido transpirable.',specs:{Material:'100% algodón piqué'}},
+  ]},
+  stradivarius:{key:'stradivarius',logo:'Strad',name:'Stradivarius',sub:'Feminine · Boho · Trendy',followers:'2.2M',hero:G.m6,hotOutfits:[{name:'Boho Chic',img:G.m6,likes:16400},{name:'Feminine Edit',img:G.m9,likes:12300}],
+  items:[
+    {id:'s1',cat:'camisetas',name:'Floral Blouse',price:'$89.900',orig:'',img:G.g1,sizes:['XS','S','M','L'],colors:['#f0ede8','#c8b89a'],desc:'Blusa floral con escote en V y volantes.',specs:{Material:'100% viscosa',Corte:'Relaxed'}},
+    {id:'s2',cat:'pantalones',name:'Flare Jeans',price:'$159.900',orig:'$199.900',img:G.g2,sizes:['34','36','38','40','42'],colors:['#4a5568','#111'],desc:'Jeans acampanados de tiro alto.',specs:{Material:'99% algodón, 1% elastano',Corte:'Flare'}},
+    {id:'s3',cat:'zapatos',name:'Strappy Sandal',price:'$179.900',orig:'',img:G.g3,sizes:['36','37','38','39','40','41'],colors:['#c8b89a','#111','#f0ede8'],desc:'Sandalia de tiras con tacón kitten.',specs:{Upper:'Cuero sintético',Tacón:'5cm'}},
+    {id:'s4',cat:'chaquetas',name:'Crochet Cardigan',price:'$139.900',orig:'',img:G.g7,sizes:['XS','S','M','L'],colors:['#c8b89a','#f0ede8','#111'],desc:'Cárdigan de punto abierto artesanal.',specs:{Material:'60% algodón, 40% acrílico'}},
+    {id:'s5',cat:'accesorios',name:'Raffia Hat',price:'$79.900',orig:'',img:G.g6,sizes:['Única'],colors:['#c8b89a'],desc:'Sombrero de rafia con ala ancha.',specs:{Material:'100% rafia natural'}},
+  ]},
 };
+
 const MY_OUTFITS=[
   {id:'mo0',name:'Night Edit',img:G.m1,likes:248,tags:['Night','Dark','Minimal'],pinned:true,prendas:[{brand:'Nike',name:'Tech Fleece',price:'$289.900',img:G.g5,storeKey:'nike',itemId:'n2'},{brand:'Zara',name:'Slim Cargo',price:'$129.900',img:G.g2,storeKey:'zara',itemId:'z3'},{brand:'Adidas',name:'Forum Low',price:'$349.900',img:G.g3,storeKey:'adidas',itemId:'a4'}]},
   {id:'mo1',name:'Street Core',img:G.m2,likes:183,tags:['Street','Urban'],pinned:true,prendas:[{brand:'Nike',name:'Dri-FIT Tee',price:'$89.900',img:G.g1,storeKey:'nike',itemId:'n1'}]},
@@ -964,8 +1047,10 @@ const MY_OUTFITS=[
   {id:'mo3',name:'Sport Lux',img:G.m4,likes:312,tags:['Sport'],pinned:false,prendas:[{brand:'Adidas',name:'SST Track',price:'$459.900',img:G.g7,storeKey:'adidas',itemId:'a2'}]},
   {id:'mo4',name:'Tonal Edit',img:G.m5,likes:156,tags:['Minimal'],pinned:false,prendas:[{brand:'Zara',name:'Chelsea Boot',price:'$399.900',img:G.g3,storeKey:'zara',itemId:'z4'}]},
   {id:'mo5',name:'Urban Night',img:G.m6,likes:421,tags:['Night','Street'],pinned:false,prendas:[{brand:'Nike',name:'Air Max 270',price:'$389.900',img:G.g3,storeKey:'nike',itemId:'n4'}]},
-  {id:'mo6',name:'Dark Minimal',img:G.m7,likes:289,tags:['Dark'],pinned:false,prendas:[{brand:'Nike',name:'Club Cargo',price:'$199.900',img:G.g2,storeKey:'nike',itemId:'n3'}]},
+  {id:'mo6',name:'Dark Minimal',img:G.m7,likes:289,tags:['Dark'],pinned:false,prendas:[{brand:'H&M',name:'Denim Jacket',price:'$199.900',img:G.g7,storeKey:'hm',itemId:'h3'}]},
   {id:'mo7',name:'Sand & Black',img:G.m8,likes:334,tags:['Tonal'],pinned:false,prendas:[{brand:'Zara',name:'Linen Overshirt',price:'$149.900',img:G.g1,storeKey:'zara',itemId:'z1'}]},
+  {id:'mo8',name:'Y2K Fit',img:G.m9,likes:512,tags:['Y2K','Trendy'],pinned:false,prendas:[{brand:'Bershka',name:'Baggy Jeans',price:'$169.900',img:G.g2,storeKey:'bershka',itemId:'b2'}]},
+  {id:'mo9',name:'Sunday Surf',img:G.m10,likes:267,tags:['Casual','Summer'],pinned:false,prendas:[{brand:'Pull & Bear',name:'Surf Tee',price:'$69.900',img:G.g1,storeKey:'pull',itemId:'p1'}]},
 ];
 const WARDROBE=[
   {id:'w1',cat:'camisetas',brand:'Nike',name:'Tech Fleece',price:'$89.900',img:G.g5},
@@ -976,12 +1061,17 @@ const WARDROBE=[
   {id:'w6',cat:'accesorios',brand:'Koaj',name:'Varsity Cap',price:'$45.900',img:G.g6},
   {id:'w7',cat:'camisetas',brand:'Nike',name:'Dri-FIT Tee',price:'$89.900',img:G.g1},
   {id:'w8',cat:'pantalones',brand:'Adidas',name:'Tiro Track',price:'$179.900',img:G.g2},
+  {id:'w9',cat:'camisetas',brand:'H&M',name:'Relaxed Hoodie',price:'$99.900',img:G.g11},
+  {id:'w10',cat:'zapatos',brand:'Nike',name:'Air Force 1',price:'$349.900',img:G.g9},
+  {id:'w11',cat:'chaquetas',brand:'Bershka',name:'Varsity Jacket',price:'$259.900',img:G.g4},
+  {id:'w12',cat:'pantalones',brand:'Bershka',name:'Baggy Jeans',price:'$169.900',img:G.g2},
 ];
 const AI_OUTFITS=[
   {name:'Dark Street Mix',mood:'Street · Urban',img:G.m8,items:[WARDROBE[0],WARDROBE[1],WARDROBE[2]]},
   {name:'Tonal Minimal',mood:'Minimal · Clean',img:G.m5,items:[WARDROBE[4],WARDROBE[1],WARDROBE[5]]},
   {name:'Sport Lux',mood:'Sport · Luxury',img:G.m4,items:[WARDROBE[3],WARDROBE[7],WARDROBE[2]]},
-  {name:'Casual Day',mood:'Casual · Comfy',img:G.m3,items:[WARDROBE[6],WARDROBE[7],WARDROBE[5]]},
+  {name:'Casual Day',mood:'Casual · Comfy',img:G.m3,items:[WARDROBE[8],WARDROBE[7],WARDROBE[5]]},
+  {name:'Y2K Vibes',mood:'Trendy · Retro',img:G.m9,items:[WARDROBE[10],WARDROBE[11],WARDROBE[9]]},
 ];
 const HOT_OUTFITS=[
   {name:'All Black Everything',img:G.m8,likes:12400},
@@ -989,14 +1079,21 @@ const HOT_OUTFITS=[
   {name:'Formal Edge',img:G.m4,likes:6700},
   {name:'Street Royalty',img:G.m2,likes:15300},
   {name:'Night Mode',img:G.m6,likes:9200},
+  {name:'Y2K Flex',img:G.m9,likes:11800},
+  {name:'Boho Sunday',img:G.m10,likes:7400},
 ];
 const FEED_ITEMS=[];
 Object.values(STORES).forEach(s=>s.items.forEach(it=>FEED_ITEMS.push({...it,storeName:s.name,storeKey:s.key})));
+
 const USERS=[
-  {name:'Bad Bunny',handle:'@badbunny',tag:'Street · Urbano · Puerto Rico',avatar:G.m2,hero:G.m2,followers:'12.4M',prendas:'48',outfitsN:'22',tags:['Streetwear','Oversized','Dark'],outfits:[{name:'Reggaeton Night',img:G.m2,likes:24800,tags:['Night'],pinned:true,prendas:[{brand:'Nike',name:'Air Max 97',price:'$520.000',img:G.g3,storeKey:'nike',itemId:'n4'}]},{name:'Street Royalty',img:G.m4,likes:18300,tags:['Street'],pinned:true,prendas:[{brand:'Adidas',name:'Forum Low',price:'$349.900',img:G.g3,storeKey:'adidas',itemId:'a4'}]},{name:'All Black',img:G.m8,likes:42100,tags:['Dark'],pinned:true,prendas:[{brand:'Nike',name:'Tech Fleece',price:'$289.900',img:G.g5,storeKey:'nike',itemId:'n2'}]},{name:'Festival Look',img:G.m6,likes:31200,tags:['Festival'],pinned:false,prendas:[{brand:'Koaj',name:'Basic Tee',price:'$49.900',img:G.g1,storeKey:'koaj',itemId:'k1'}]},{name:'Studio Day',img:G.m5,likes:15600,tags:['Urban'],pinned:false,prendas:[{brand:'Adidas',name:'SST Jacket',price:'$459.900',img:G.g7,storeKey:'adidas',itemId:'a2'}]},{name:'Retro Wave',img:G.m1,likes:19400,tags:['Retro'],pinned:false,prendas:[{brand:'Adidas',name:'SST Jacket',price:'$459.900',img:G.g7,storeKey:'adidas',itemId:'a2'}]}]},
+  {name:'Bad Bunny',handle:'@badbunny',tag:'Street · Urbano · Puerto Rico',avatar:G.m2,hero:G.m2,followers:'12.4M',prendas:'48',outfitsN:'22',tags:['Streetwear','Oversized','Dark'],outfits:[{name:'Reggaeton Night',img:G.m2,likes:24800,tags:['Night'],pinned:true,prendas:[{brand:'Nike',name:'Air Max 97',price:'$520.000',img:G.g3,storeKey:'nike',itemId:'n4'}]},{name:'Street Royalty',img:G.m4,likes:18300,tags:['Street'],pinned:true,prendas:[{brand:'Adidas',name:'Forum Low',price:'$349.900',img:G.g3,storeKey:'adidas',itemId:'a4'}]},{name:'All Black',img:G.m8,likes:42100,tags:['Dark'],pinned:true,prendas:[{brand:'Nike',name:'Tech Fleece',price:'$289.900',img:G.g5,storeKey:'nike',itemId:'n2'}]},{name:'Festival Look',img:G.m6,likes:31200,tags:['Festival'],pinned:false,prendas:[{brand:'Bershka',name:'Graphic Tee',price:'$59.900',img:G.g1,storeKey:'bershka',itemId:'b1'}]},{name:'Studio Day',img:G.m5,likes:15600,tags:['Urban'],pinned:false,prendas:[{brand:'Adidas',name:'SST Jacket',price:'$459.900',img:G.g7,storeKey:'adidas',itemId:'a2'}]},{name:'Retro Wave',img:G.m1,likes:19400,tags:['Retro'],pinned:false,prendas:[{brand:'Adidas',name:'SST Jacket',price:'$459.900',img:G.g7,storeKey:'adidas',itemId:'a2'}]}]},
   {name:'Kendrick Lamar',handle:'@kendrick',tag:'Streetwear · Compton · Minimal',avatar:G.m3,hero:G.m3,followers:'8.1M',prendas:'32',outfitsN:'15',tags:['Minimal','Compton','Nike'],outfits:[{name:'Compton Minimal',img:G.m3,likes:8100,tags:['Minimal'],pinned:true,prendas:[{brand:'Nike',name:'Dri-FIT Tee',price:'$89.900',img:G.g1,storeKey:'nike',itemId:'n1'}]},{name:'Award Show',img:G.m4,likes:12200,tags:['Formal'],pinned:true,prendas:[{brand:'Zara',name:'Linen Blazer',price:'$299.900',img:G.g7,storeKey:'zara',itemId:'z2'}]},{name:'Pulitzer Day',img:G.m7,likes:21000,tags:['Icon'],pinned:false,prendas:[{brand:'Nike',name:'Air Max 270',price:'$389.900',img:G.g3,storeKey:'nike',itemId:'n4'}]}]},
   {name:'Andrés Bilbao',handle:'@andresbilbao',tag:'Colombia · Formal · Trendy',avatar:G.m4,hero:G.m4,followers:'2.3M',prendas:'28',outfitsN:'11',tags:['Trendy','Colombia','Zara'],outfits:[{name:'Bogotá Formal',img:G.m4,likes:2310,tags:['Formal'],pinned:true,prendas:[{brand:'Zara',name:'Linen Blazer',price:'$299.900',img:G.g7,storeKey:'zara',itemId:'z2'}]},{name:'Weekend MDE',img:G.m5,likes:4100,tags:['Casual'],pinned:true,prendas:[{brand:'Koaj',name:'Basic Tee',price:'$49.900',img:G.g1,storeKey:'koaj',itemId:'k1'}]}]},
-  {name:'San Atman',handle:'@sanatman',tag:'Urban · Medellín · Street',avatar:G.m6,hero:G.m6,followers:'890K',prendas:'19',outfitsN:'9',tags:['Street','Medellín','Adidas'],outfits:[{name:'Medellín Street',img:G.m6,likes:8900,tags:['Street'],pinned:true,prendas:[{brand:'Adidas',name:'SST Jacket',price:'$459.900',img:G.g7,storeKey:'adidas',itemId:'a2'}]},{name:'Trap Vibes',img:G.m2,likes:6700,tags:['Trap'],pinned:true,prendas:[{brand:'Nike',name:'Tech Fleece',price:'$289.900',img:G.g5,storeKey:'nike',itemId:'n2'}]}]}
+  {name:'San Atman',handle:'@sanatman',tag:'Urban · Medellín · Street',avatar:G.m6,hero:G.m6,followers:'890K',prendas:'19',outfitsN:'9',tags:['Street','Medellín','Adidas'],outfits:[{name:'Medellín Street',img:G.m6,likes:8900,tags:['Street'],pinned:true,prendas:[{brand:'Adidas',name:'SST Jacket',price:'$459.900',img:G.g7,storeKey:'adidas',itemId:'a2'}]},{name:'Trap Vibes',img:G.m2,likes:6700,tags:['Trap'],pinned:true,prendas:[{brand:'Nike',name:'Tech Fleece',price:'$289.900',img:G.g5,storeKey:'nike',itemId:'n2'}]}]},
+  {name:'Maluma',handle:'@maluma',tag:'Fashion · Medellín · Icon',avatar:G.m1,hero:G.m1,followers:'18.7M',prendas:'94',outfitsN:'41',tags:['Luxury','Fashion','Colombia'],outfits:[{name:'Pretty Boy',img:G.m1,likes:52300,tags:['Luxury'],pinned:true,prendas:[{brand:'Zara',name:'Linen Blazer',price:'$299.900',img:G.g7,storeKey:'zara',itemId:'z2'}]},{name:'Hawái Vibes',img:G.m9,likes:44100,tags:['Summer'],pinned:true,prendas:[{brand:'Pull & Bear',name:'Surf Tee',price:'$69.900',img:G.g1,storeKey:'pull',itemId:'p1'}]},{name:'PAPI Edit',img:G.m4,likes:38900,tags:['Street'],pinned:false,prendas:[{brand:'Nike',name:'Air Force 1',price:'$349.900',img:G.g9,storeKey:'nike',itemId:'n7'}]}]},
+  {name:'J Balvin',handle:'@jbalvin',tag:'Colorful · Medellín · Vibe',avatar:G.m10,hero:G.m10,followers:'21.4M',prendas:'120',outfitsN:'56',tags:['Colorful','Vibe','Adidas'],outfits:[{name:'VIBRA Edit',img:G.m10,likes:78400,tags:['Color'],pinned:true,prendas:[{brand:'Adidas',name:'SST Jacket',price:'$459.900',img:G.g7,storeKey:'adidas',itemId:'a2'}]},{name:'Arcoíris Fit',img:G.m2,likes:54200,tags:['Bold'],pinned:true,prendas:[{brand:'Bershka',name:'Varsity Jacket',price:'$259.900',img:G.g4,storeKey:'bershka',itemId:'b8'}]}]},
+  {name:'Valentina López',handle:'@valentinafit',tag:'Bogotá · Fitness · Lifestyle',avatar:G.m9,hero:G.m9,followers:'1.4M',prendas:'62',outfitsN:'28',tags:['Fitness','Feminine','Nike'],outfits:[{name:'Gym Ready',img:G.m9,likes:9800,tags:['Sport'],pinned:true,prendas:[{brand:'Nike',name:'Dri-FIT Tee',price:'$89.900',img:G.g1,storeKey:'nike',itemId:'n1'}]},{name:'Boho Sunday',img:G.m6,likes:7200,tags:['Boho'],pinned:true,prendas:[{brand:'Stradivarius',name:'Floral Blouse',price:'$89.900',img:G.g1,storeKey:'stradivarius',itemId:'s1'}]}]},
+  {name:'Sebastián Yatra',handle:'@sebyatra',tag:'Pop · Colombia · Romantic',avatar:G.m7,hero:G.m7,followers:'9.2M',prendas:'58',outfitsN:'24',tags:['Romantic','Zara','Formal'],outfits:[{name:'Tour Fit',img:G.m7,likes:21400,tags:['Stage'],pinned:true,prendas:[{brand:'Zara',name:'Tailored Trousers',price:'$179.900',img:G.g10,storeKey:'zara',itemId:'z7'}]},{name:'Date Night',img:G.m4,likes:16800,tags:['Romantic'],pinned:true,prendas:[{brand:'Zara',name:'Chelsea Boot',price:'$399.900',img:G.g3,storeKey:'zara',itemId:'z4'}]},{name:'Casual Yatra',img:G.m5,likes:12300,tags:['Casual'],pinned:false,prendas:[{brand:'H&M',name:'Linen Shirt',price:'$119.900',img:G.g1,storeKey:'hm',itemId:'h5'}]}]},
 ];
 
 let stack=[],curProd=null,curStore=null,curSchedItem=null,curOutfit=null,curUserIdx=null;
@@ -1046,20 +1143,16 @@ function openPhotoPicker(){
 function closePhotoPicker(){document.getElementById('photoOverlay').classList.remove('show');}
 function closePhotoPickerEv(e){if(e.target===document.getElementById('photoOverlay'))closePhotoPicker();}
 
-function goTryOnWithPhoto(source){
+function goTryOnWithPhoto(src){
   closePhotoPicker();
-  if(source==='avatar'){
-    document.getElementById('to-base').src=userPhotoSrc;
-    document.getElementById('to-base').style.filter='brightness(.5) saturate(.7)';
-  }
+  if(src==='avatar'){document.getElementById('to-base').src=userPhotoSrc;document.getElementById('to-base').style.filter='brightness(.5) saturate(.7)';}
   if(curProd)document.getElementById('to-garment').src=curProd.item.img;
   pushScreen('s-tryon');
 }
-
 function handleFileUpload(e){
   const file=e.target.files[0];if(!file)return;
   const reader=new FileReader();
-  reader.onload=function(ev){
+  reader.onload=ev=>{
     userPhotoSrc=ev.target.result;
     document.getElementById('avatarChipImg').src=userPhotoSrc;
     closePhotoPicker();
@@ -1070,8 +1163,7 @@ function handleFileUpload(e){
     toast('Foto cargada — ¡pruébate la prenda!');
   };
   reader.readAsDataURL(file);
-  e.target.value='';
-  e.target.removeAttribute('capture');
+  e.target.value='';e.target.removeAttribute('capture');
 }
 
 function buildHomeHotRow(){document.getElementById('homeHotRow').innerHTML=HOT_OUTFITS.map((h,i)=>`<div class="hot-pill" onclick="openMyOutfit(${i%MY_OUTFITS.length})"><img src="${h.img}" alt=""><div class="hot-pill-grad"></div><div class="hot-pill-info"><div class="hpi-name">${h.name}</div><button class="hpi-try" onclick="event.stopPropagation();hotTry(${i})">Probar ahora</button></div></div>`).join('');}
@@ -1079,7 +1171,7 @@ function hotTry(i){const h=HOT_OUTFITS[i];curProd={store:{name:'Dezeo'},item:{im
 function feedCat(el,cat){document.querySelectorAll('#feedFilter .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');buildPinGrid(cat);}
 function buildPinGrid(cat){
   let items=cat==='all'?FEED_ITEMS:FEED_ITEMS.filter(i=>i.cat===cat);
-  document.getElementById('pinGrid').innerHTML=items.slice(0,10).map((it,i)=>`<div class="pin-card ${i===0||i===5?'tall':''}" onclick="openProduct('${it.storeKey}','${it.id}')"><img class="pin-img" src="${it.img}" alt=""><div class="pin-grad"></div><div class="pin-heart ${likes[it.id]?'liked':''}" onclick="event.stopPropagation();togglePinHeart(this,'${it.id}','${it.storeName}','${it.name}','${it.price}','${it.img}')">${likes[it.id]?ICO.heartFill:ICO.heart}</div><div class="pin-info"><div class="pin-brand">${it.storeName}</div><div class="pin-name">${it.name}</div><div class="pin-price">${it.price}</div></div><button class="pin-try" onclick="event.stopPropagation();quickTryProduct('${it.storeKey}','${it.id}')">${ICO.try}Probar</button></div>`).join('');
+  document.getElementById('pinGrid').innerHTML=items.slice(0,12).map((it,i)=>`<div class="pin-card ${i===0||i===5||i===9?'tall':''}" onclick="openProduct('${it.storeKey}','${it.id}')"><img class="pin-img" src="${it.img}" alt=""><div class="pin-grad"></div><div class="pin-heart ${likes[it.id]?'liked':''}" onclick="event.stopPropagation();togglePinHeart(this,'${it.id}','${it.storeName}','${it.name}','${it.price}','${it.img}')">${likes[it.id]?ICO.heartFill:ICO.heart}</div><div class="pin-info"><div class="pin-brand">${it.storeName}</div><div class="pin-name">${it.name}</div><div class="pin-price">${it.price}</div></div><button class="pin-try" onclick="event.stopPropagation();quickTryProduct('${it.storeKey}','${it.id}')">${ICO.try}Probar</button></div>`).join('');
 }
 function togglePinHeart(el,id,brand,name,price,img){likes[id]=!likes[id];el.className='pin-heart'+(likes[id]?' liked':'');el.innerHTML=likes[id]?ICO.heartFill:ICO.heart;if(likes[id]){if(!favItems.find(f=>f.name===name))favItems.push({img,name,brand,price});updateFavCount();toast('Guardado en favoritos');}else toast('Eliminado');}
 function quickTryProduct(sk,id){const s=STORES[sk],it=s.items.find(i=>i.id===id);curProd={store:s,item:it};openPhotoPicker();}
@@ -1144,13 +1236,21 @@ function buildArmOutfitRow(){document.getElementById('armOutfitRow').innerHTML=M
 
 function initTiendas(){document.getElementById('hotOutfitsRow').innerHTML=HOT_OUTFITS.map((h,i)=>`<div class="hot-card" onclick="openMyOutfit(${i%MY_OUTFITS.length})"><img src="${h.img}" alt=""><div class="hot-card-grad"></div><div class="hot-card-info"><div class="hc-name">${h.name}</div><div class="hc-likes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>${h.likes.toLocaleString()}</div></div></div>`).join('');renderTiendas('all');}
 function tiendaCat(el,cat){document.querySelectorAll('#tiendaCats .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');renderTiendas(cat);}
-function renderTiendas(cat){const filtered=cat==='all'?Object.values(STORES):Object.values(STORES).filter(s=>s.items.some(i=>i.cat===cat));const icons={nike:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12C4 8 8 4 14 4s8 4 8 8-4 8-8 8"/></svg>',adidas:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20l5-8h8l5 8z"/></svg>',zara:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',koaj:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="4"/></svg>'};document.getElementById('storesGrid').innerHTML=filtered.map(s=>`<div class="st-card" onclick="openStore('${s.key}')"><div class="st-icon">${icons[s.key]||icons.zara}</div><div class="st-name">${s.name}</div><div class="st-cat">${s.sub}</div><div class="st-fol"><b>${s.followers}</b> seguidores</div><button class="st-try">Entrar</button></div>`).join('');}
+function renderTiendas(cat){
+  const filtered=cat==='all'?Object.values(STORES):Object.values(STORES).filter(s=>s.items.some(i=>i.cat===cat));
+  const icons={nike:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12C4 8 8 4 14 4s8 4 8 8-4 8-8 8"/></svg>',adidas:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20l5-8h8l5 8z"/></svg>',zara:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',koaj:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="4"/></svg>',hm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20V4h5v7h8V4h5v16"/></svg>',bershka:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>',pull:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>',stradivarius:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2a10 10 0 110 20"/><path d="M12 6a6 6 0 110 12"/></svg>'};
+  document.getElementById('storesGrid').innerHTML=filtered.map(s=>`<div class="st-card" onclick="openStore('${s.key}')"><div class="st-icon">${icons[s.key]||icons.zara}</div><div class="st-name">${s.name}</div><div class="st-cat">${s.sub}</div><div class="st-fol"><b>${s.followers}</b> seguidores</div><button class="st-try">Entrar</button></div>`).join('');
+}
 
 function openAI(){document.getElementById('aiOutfits').innerHTML=AI_OUTFITS.map((o,i)=>`<div class="ai-card"><div class="ai-card-img"><img src="${o.img}" alt=""></div><div class="ai-card-body"><div class="ai-card-name">${o.name}</div><div class="ai-card-mood">${o.mood}</div><div class="ai-card-items">${o.items.map(it=>`<div class="ai-item-thumb"><img src="${it.img}" alt=""></div>`).join('')}</div><div class="ai-card-acts"><button class="ai-btn ai-btn-prim" onclick="aiTryOn(${i})">${ICO.try} Probarme</button><button class="ai-btn ai-btn-sec" onclick="openShareModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:11px;height:11px;stroke-width:2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Compartir</button></div></div></div>`).join('');document.getElementById('aiOverlay').classList.add('show');}
 function closeAI(){document.getElementById('aiOverlay').classList.remove('show');}
 function aiTryOn(i){closeAI();const o=AI_OUTFITS[i];curProd={store:{name:'Armario'},item:{img:o.img,name:o.name,price:''}};setTimeout(()=>openPhotoPicker(),100);}
 
-function buildPinnedSection(outfits,containerEl,ownerCtx){const pinned=outfits.filter(o=>o.pinned);if(!pinned.length){containerEl.innerHTML='';return;}const isMe=ownerCtx.type==='me';containerEl.innerHTML=`<div class="pinned-hdr"><div class="pinned-ttl">Destacados</div>${isMe?`<div style="font-size:10px;color:var(--sand);cursor:pointer;font-weight:600" onclick="toast('Editar próximamente')">Editar</div>`:''}</div><div class="pinned-row">${pinned.map(o=>{const ri=outfits.indexOf(o),fn=isMe?`openMyOutfit(${ri})`:`openUserOutfit(${ownerCtx.idx},${ri})`;return `<div class="pinned-card"><div class="pinned-card-img" onclick="${fn}"><img src="${o.img}" alt=""><div class="pinned-card-grad"></div><div class="pinned-card-info"><div class="pc-name">${o.name}</div><div class="pc-likes">${o.likes.toLocaleString()}</div></div></div><div class="pinned-thumbs">${o.prendas.slice(0,4).map(p=>`<div class="pc-pr-thumb" onclick="prDesire('${p.name}','${p.brand}','${p.price}','${p.img}')"><img src="${p.img}" alt=""></div>`).join('')}</div><button class="pc-desire-btn" onclick="prDesire('${o.prendas[0].name}','${o.prendas[0].brand}','${o.prendas[0].price}','${o.prendas[0].img}')">Desear</button></div>`;}).join('')}</div>`;}
+function buildPinnedSection(outfits,containerEl,ownerCtx){
+  const pinned=outfits.filter(o=>o.pinned);if(!pinned.length){containerEl.innerHTML='';return;}
+  const isMe=ownerCtx.type==='me';
+  containerEl.innerHTML=`<div class="pinned-hdr"><div class="pinned-ttl">Destacados</div>${isMe?`<div style="font-size:10px;color:var(--sand);cursor:pointer;font-weight:600" onclick="toast('Editar próximamente')">Editar</div>`:''}</div><div class="pinned-row">${pinned.map(o=>{const ri=outfits.indexOf(o),fn=isMe?`openMyOutfit(${ri})`:`openUserOutfit(${ownerCtx.idx},${ri})`;return `<div class="pinned-card"><div class="pinned-card-img" onclick="${fn}"><img src="${o.img}" alt=""><div class="pinned-card-grad"></div><div class="pinned-card-info"><div class="pc-name">${o.name}</div><div class="pc-likes">${o.likes.toLocaleString()}</div></div></div><div class="pinned-thumbs">${o.prendas.slice(0,4).map(p=>`<div class="pc-pr-thumb" onclick="prDesire('${p.name}','${p.brand}','${p.price}','${p.img}')"><img src="${p.img}" alt=""></div>`).join('')}</div><button class="pc-desire-btn" onclick="prDesire('${o.prendas[0].name}','${o.prendas[0].brand}','${o.prendas[0].price}','${o.prendas[0].img}')">Desear</button></div>`;}).join('')}</div>`;
+}
 function initPerfil(){updateFavCount();buildPinnedSection(MY_OUTFITS,document.getElementById('myPinnedSection'),{type:'me'});document.getElementById('profOutfitsGrid').innerHTML=MY_OUTFITS.map((o,i)=>`<div class="og2-item${i===0?' big':''}" onclick="openMyOutfit(${i})"><img src="${o.img}" alt=""><div class="og2-likes">${o.likes}</div>${o.pinned?'<div class="og2-pin-badge">pin</div>':''}</div>`).join('');renderFavs();}
 function profTab(el,tab){document.querySelectorAll('.prof-tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');document.getElementById('profOutfitsGrid').style.display=tab==='outfits'?'grid':'none';document.getElementById('profFavsGrid').style.display=tab==='favs'?'grid':'none';if(tab==='favs')renderFavs();}
 function renderFavs(){const el=document.getElementById('profFavsGrid');if(!favItems.length)el.innerHTML=`<div style="grid-column:span 2;text-align:center;padding:36px;color:var(--ink3)"><div style="font-size:12px;line-height:1.6">Dale like a prendas<br>y aparecerán aquí</div></div>`;else el.innerHTML=favItems.map(f=>`<div class="fav-card"><div class="fav-img"><img src="${f.img}" alt=""></div><div class="fav-info"><div class="fav-brand">${f.brand}</div><div class="fav-name">${f.name}</div><div class="fav-price">${f.price}</div></div></div>`).join('');}
@@ -1162,14 +1262,22 @@ function toggleOutfitLike(){const key='of-'+(curOutfit?.name||'x');likes[key]=!l
 function prH(el,name,brand,price,img){const id='pr-'+name;likes[id]=!likes[id];el.className='ofd-pr-h'+(likes[id]?' liked':'');el.querySelector('svg').setAttribute('fill',likes[id]?'currentColor':'none');if(likes[id]){if(!favItems.find(f=>f.name===name))favItems.push({img,name,brand,price});updateFavCount();toast('Favorito');}}
 function prDesire(name,brand,price,img){curProd={store:{name:brand},item:{img,name,price,sizes:[],colors:[],desc:'',specs:{}}};setDsModal(img,name,brand,price);document.getElementById('desireOverlay').classList.add('show');}
 
-function openUserProfile(idx){curUserIdx=idx;const u=USERS[idx];document.getElementById('up-hero').src=u.hero;document.getElementById('up-name').textContent=u.name;document.getElementById('up-handle').textContent=u.handle+' · '+u.tag;document.getElementById('up-prendas').textContent=u.prendas;document.getElementById('up-outfits-n').textContent=u.outfitsN;document.getElementById('up-followers').textContent=u.followers;const fb=document.getElementById('up-follow-btn');fb.textContent=userFollows[idx]?'Siguiendo':'+ Seguir';fb.className=userFollows[idx]?'pa-btn pa-sec':'pa-btn pa-primary';document.getElementById('up-tags').innerHTML=u.tags.map(t=>`<div class="dna-t ${['Streetwear','Minimal','Trendy','Street'].includes(t)?'hi':''}">${t}</div>`).join('');buildPinnedSection(u.outfits,document.getElementById('userPinnedSection'),{type:'user',idx});document.getElementById('up-outfit-grid').innerHTML=u.outfits.map((o,i)=>`<div class="og2-item${i===0?' big':''}" onclick="openUserOutfit(${idx},${i})"><img src="${o.img}" alt=""><div class="og2-likes">${o.likes.toLocaleString()}</div>${o.pinned?'<div class="og2-pin-badge">pin</div>':''}</div>`).join('');pushScreen('s-userprofile');}
+function openUserProfile(idx){curUserIdx=idx;const u=USERS[idx];document.getElementById('up-hero').src=u.hero;document.getElementById('up-name').textContent=u.name;document.getElementById('up-handle').textContent=u.handle+' · '+u.tag;document.getElementById('up-prendas').textContent=u.prendas;document.getElementById('up-outfits-n').textContent=u.outfitsN;document.getElementById('up-followers').textContent=u.followers;const fb=document.getElementById('up-follow-btn');fb.textContent=userFollows[idx]?'Siguiendo':'+ Seguir';fb.className=userFollows[idx]?'pa-btn pa-sec':'pa-btn pa-primary';document.getElementById('up-tags').innerHTML=u.tags.map(t=>`<div class="dna-t ${['Streetwear','Minimal','Trendy','Street','Luxury','Colorful','Fitness','Romantic'].includes(t)?'hi':''}">${t}</div>`).join('');buildPinnedSection(u.outfits,document.getElementById('userPinnedSection'),{type:'user',idx});document.getElementById('up-outfit-grid').innerHTML=u.outfits.map((o,i)=>`<div class="og2-item${i===0?' big':''}" onclick="openUserOutfit(${idx},${i})"><img src="${o.img}" alt=""><div class="og2-likes">${o.likes.toLocaleString()}</div>${o.pinned?'<div class="og2-pin-badge">pin</div>':''}</div>`).join('');pushScreen('s-userprofile');}
 function toggleUserFollow(){userFollows[curUserIdx]=!userFollows[curUserIdx];const btn=document.getElementById('up-follow-btn');btn.textContent=userFollows[curUserIdx]?'Siguiendo':'+ Seguir';btn.className=userFollows[curUserIdx]?'pa-btn pa-sec':'pa-btn pa-primary';toast(userFollows[curUserIdx]?`Siguiendo a ${USERS[curUserIdx].name}`:'Dejaste de seguir');}
 
 function initSearch(){srchFilter='all';document.getElementById('srchInput').value='';document.querySelectorAll('#srchTabs .chip').forEach((c,i)=>c.classList.toggle('on',i===0));renderSearch('');}
 function clearSearch(){document.getElementById('srchInput').value='';renderSearch('');}
 function srchTab(el,f){srchFilter=f;document.querySelectorAll('#srchTabs .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');renderSearch(document.getElementById('srchInput').value);}
 function doSearch(q){renderSearch(q);}
-function renderSearch(q){const ql=q.toLowerCase(),el=document.getElementById('srchResults'),showP=srchFilter!=='stores',showS=srchFilter!=='people';const users=showP?USERS.filter(u=>!ql||u.name.toLowerCase().includes(ql)||u.handle.toLowerCase().includes(ql)):[];const stores=showS?Object.values(STORES).filter(s=>!ql||s.name.toLowerCase().includes(ql)):[];let html='';if(!ql){if(showP)html+=`<div class="srch-sec"><div class="srch-sec-ttl">Populares</div>${USERS.map((u,i)=>personRow(u,i)).join('')}</div>`;if(showS)html+=`<div class="srch-sec"><div class="srch-sec-ttl">Tiendas</div>${Object.values(STORES).map(s=>storeRowHtml(s)).join('')}</div>`;}else{if(users.length)html+=`<div class="srch-sec"><div class="srch-sec-ttl">Personas</div>${users.map(u=>personRow(u,USERS.indexOf(u))).join('')}</div>`;if(stores.length)html+=`<div class="srch-sec"><div class="srch-sec-ttl">Tiendas</div>${stores.map(s=>storeRowHtml(s)).join('')}</div>`;if(!users.length&&!stores.length)html=`<div style="text-align:center;padding:60px 22px;color:var(--ink3)"><div style="font-size:12px">Sin resultados para "${q}"</div></div>`;}el.innerHTML=html;}
+function renderSearch(q){
+  const ql=q.toLowerCase(),el=document.getElementById('srchResults'),showP=srchFilter!=='stores',showS=srchFilter!=='people';
+  const users=showP?USERS.filter(u=>!ql||u.name.toLowerCase().includes(ql)||u.handle.toLowerCase().includes(ql)):[];
+  const stores=showS?Object.values(STORES).filter(s=>!ql||s.name.toLowerCase().includes(ql)):[];
+  let html='';
+  if(!ql){if(showP)html+=`<div class="srch-sec"><div class="srch-sec-ttl">Populares</div>${USERS.map((u,i)=>personRow(u,i)).join('')}</div>`;if(showS)html+=`<div class="srch-sec"><div class="srch-sec-ttl">Tiendas</div>${Object.values(STORES).map(s=>storeRowHtml(s)).join('')}</div>`;}
+  else{if(users.length)html+=`<div class="srch-sec"><div class="srch-sec-ttl">Personas</div>${users.map(u=>personRow(u,USERS.indexOf(u))).join('')}</div>`;if(stores.length)html+=`<div class="srch-sec"><div class="srch-sec-ttl">Tiendas</div>${stores.map(s=>storeRowHtml(s)).join('')}</div>`;if(!users.length&&!stores.length)html=`<div style="text-align:center;padding:60px 22px;color:var(--ink3)"><div style="font-size:12px">Sin resultados para "${q}"</div></div>`;}
+  el.innerHTML=html;
+}
 function personRow(u,idx){return `<div class="person-row" onclick="openUserProfile(${idx})"><div class="pav"><img src="${u.avatar}" alt=""></div><div class="pinfo"><div class="pname">${u.name}</div><div class="phandle">${u.handle}</div><div class="ptag">${u.tag}</div></div><button class="follow-sm ${userFollows[idx]?'following':''}" onclick="event.stopPropagation();quickFollow(${idx},this)">${userFollows[idx]?'Siguiendo':'+ Seguir'}</button></div>`;}
 function storeRowHtml(s){return `<div class="store-row" onclick="openStore('${s.key}')"><div class="slogo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg></div><div class="srowinfo"><div class="srowname">${s.name}</div><div class="srowcat">${s.sub}</div><div class="srowfol">${s.followers} seguidores</div></div><button class="enter-sm" onclick="event.stopPropagation();openStore('${s.key}')">Entrar</button></div>`;}
 function quickFollow(idx,btn){userFollows[idx]=!userFollows[idx];btn.textContent=userFollows[idx]?'Siguiendo':'+ Seguir';btn.className='follow-sm '+(userFollows[idx]?'following':'');toast(userFollows[idx]?`Siguiendo a ${USERS[idx].name}`:'Dejaste de seguir');}
