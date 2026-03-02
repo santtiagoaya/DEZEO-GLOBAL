@@ -44,8 +44,8 @@ body.dark{background:#222;}
 .ibtn svg{width:14px;height:14px;stroke:var(--ink2);stroke-width:1.7;}
 
 /* MASON / PIN */
-.mason{column-count:2;column-gap:4px;padding:0 10px;}
-.pin{break-inside:avoid;margin-bottom:4px;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:var(--bg2);}
+.mason{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:0 10px;align-items:start;}
+.pin{margin-bottom:4px;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:var(--bg2);}
 .pin img{width:100%;display:block;object-fit:cover;}
 .pin-ov{position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.7));}
 .pin-inf{position:absolute;bottom:0;left:0;right:0;padding:7px 8px 9px;}
@@ -417,7 +417,7 @@ body.dark .toast{background:#f0f0f0;color:#111;}
 #s-allout{padding-bottom:96px;}
 </style>
 </head>
-<body>
+<body class="dark">
 <div class="phone">
 
 <!-- ONBOARDING -->
@@ -438,11 +438,11 @@ body.dark .toast{background:#f0f0f0;color:#111;}
     <div id="ob-card" style="width:260px;transform:translateY(900px);transition:transform .78s cubic-bezier(.22,.68,0,1.15);">
       <div style="border-radius:22px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(0,0,0,.7);">
         <!-- B&W fashion editorial image -->
-        <img src="https://images.pexels.com/photos/2220316/pexels-photo-2220316.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:310px;object-fit:cover;display:block;filter:grayscale(1) contrast(1.08) brightness(.96);" alt="">
+        <img src="https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:310px;object-fit:cover;object-position:center;display:block;filter:grayscale(1) contrast(1.15) brightness(.88);" alt="">
         <div style="position:absolute;inset:0;background:linear-gradient(transparent 42%,rgba(0,0,0,.85));"></div>
         <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 15px 17px;">
-          <div style="font-size:8px;color:rgba(255,255,255,.4);font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:4px;font-family:'Inter',sans-serif;">EDITORIAL</div>
-          <div style="font-size:17px;font-weight:800;color:#fff;letter-spacing:-.5px;line-height:1.15;margin-bottom:3px;font-family:'Inter',sans-serif;">Tu look ideal</div>
+          <div style="font-size:8px;color:rgba(255,255,255,.4);font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:4px;font-family:'Inter',sans-serif;">DENIM</div>
+          <div style="font-size:17px;font-weight:800;color:#fff;letter-spacing:-.5px;line-height:1.15;margin-bottom:3px;font-family:'Inter',sans-serif;">Slim Jeans</div>
           <div style="font-size:11.5px;color:rgba(255,255,255,.4);font-family:'Inter',sans-serif;">Descúbrelo ahora</div>
         </div>
       </div>
@@ -711,7 +711,7 @@ body.dark .toast{background:#f0f0f0;color:#111;}
   <div class="set-section">
     <div class="set-section-ttl">Preferencias</div>
     <div class="set-group">
-      <div class="set-row"><div class="set-icon" style="background:#111;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></div><div class="set-row-info"><div class="set-row-nm">Modo oscuro</div><div class="set-row-sub">Cambia todo el tema</div></div><button class="set-toggle" id="dark-toggle" onclick="toggleDark(this)"></button></div>
+      <div class="set-row"><div class="set-icon" style="background:#111;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></div><div class="set-row-info"><div class="set-row-nm">Modo oscuro</div><div class="set-row-sub">Cambia todo el tema</div></div>      <button class="set-toggle on" id="dark-toggle" onclick="toggleDark(this)"></button></div>
     </div>
   </div>
 </div>
@@ -1075,7 +1075,7 @@ function buildFeedHTML(items){
 }
 
 /* ===== PIN ===== */
-function mkPin(it,idx){const h=it.h||PH[idx%PH.length];const label=it.sn||it.bn||'';const sk=it.sk||it.bk||'';return `<div class="pin" onclick="openProd('${sk}','${it.id}')"><button class="pin-ht${likes[it.id]?' liked':''}" onclick="event.stopPropagation();pinLike(this,'${it.id}','${it.n}','${label}','${it.pr}','${it.img}')"><svg viewBox="0 0 24 24" fill="${likes[it.id]?'#fff':'none'}" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><img src="${it.img}" style="height:${h}px;" alt="" loading="lazy"><div class="pin-ov"></div><div class="pin-inf">${label?`<div class="pin-bl">${label}</div>`:''}<div class="pin-nm">${it.n}</div><div class="pin-pr">${it.pr}</div></div><button class="pin-try" onclick="event.stopPropagation();quickTry('${sk}','${it.id}')">Probar</button></div>`;}
+function mkPin(it,idx){const label=it.sn||it.bn||'';const sk=it.sk||it.bk||'';return `<div class="pin" onclick="openProd('${sk}','${it.id}')"><button class="pin-ht${likes[it.id]?' liked':''}" onclick="event.stopPropagation();pinLike(this,'${it.id}','${it.n}','${label}','${it.pr}','${it.img}')"><svg viewBox="0 0 24 24" fill="${likes[it.id]?'#fff':'none'}" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><img src="${it.img}" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block;" alt="" loading="lazy"><div class="pin-ov"></div><div class="pin-inf">${label?`<div class="pin-bl">${label}</div>`:''}<div class="pin-nm">${it.n}</div><div class="pin-pr">${it.pr}</div></div><button class="pin-try" onclick="event.stopPropagation();quickTry('${sk}','${it.id}')">Probar</button></div>`;}
 
 function destCard(d,fn){return `<div class="dc" onclick="${fn}"><img src="${d.img}" alt="" loading="lazy"><div class="dc-g"></div><div class="dc-i"><div class="dc-n">${d.n}</div><button class="dc-b" onclick="event.stopPropagation();${fn}">Ver outfit</button></div></div>`;}
 
