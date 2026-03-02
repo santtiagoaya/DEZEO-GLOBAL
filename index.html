@@ -68,9 +68,9 @@ body.dark{background:#222;}
 
 /* MUSIC BAR */
 .mbar{margin:0 16px 12px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:11px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:background .25s,border .25s;}
-.mbar-art{width:36px;height:36px;border-radius:10px;overflow:hidden;flex-shrink:0;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;}
+.mbar-art{width:36px;height:36px;border-radius:10px;overflow:hidden;flex-shrink:0;background:rgba(29,185,84,.12);border:1px solid rgba(29,185,84,.25);display:flex;align-items:center;justify-content:center;}
 .mbar-info{flex:1;min-width:0;}
-.mbar-label{font-size:8px;color:var(--ink4);font-weight:600;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px;}
+.mbar-label{font-size:8px;color:var(--ink3);font-weight:600;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px;}
 .mbar-song{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .mbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
 .mbar-waves{display:flex;align-items:flex-end;gap:2px;height:16px;}
@@ -80,8 +80,8 @@ body.dark{background:#222;}
 .mbar-wave:nth-child(4){animation-delay:.08s;}
 .mbar-wave:nth-child(5){animation-delay:.18s;}
 @keyframes wv{0%,100%{height:3px}50%{height:14px}}
-.mbar-pbtn{width:28px;height:28px;border-radius:50%;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
-.mbar-pbtn svg{width:9px;height:9px;fill:var(--ink2);margin-left:1px;}
+.mbar-pbtn{width:28px;height:28px;border-radius:50%;background:rgba(29,185,84,.15);border:1px solid rgba(29,185,84,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.mbar-pbtn svg{width:9px;height:9px;fill:#1DB954;margin-left:1px;}
 
 /* DEST ROW */
 .drow{padding:0 0 0 16px;margin-bottom:14px;}
@@ -518,17 +518,17 @@ body.dark .toast{background:#f0f0f0;color:#111;}
   <div style="padding:10px 0 0;">
     <!-- Minimal music bar -->
     <div class="mbar" id="sd-mbar" onclick="toggleMusic()">
-      <div class="mbar-art" style="background:transparent;border:none;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <div class="mbar-art">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
           <circle cx="12" cy="12" r="10" stroke="#1DB954" stroke-width="1.5"/>
           <path d="M9 8l6 4-6 4V8z" fill="#1DB954"/>
         </svg>
       </div>
       <div class="mbar-info"><div class="mbar-label">Playlist de la tienda</div><div class="mbar-song" id="sdh-song">—</div></div>
-      <div class="mbar-right" id="sd-music-right">
+      <div class="mbar-right">
         <div id="sd-music-waves" class="mbar-waves" style="display:none;"><div class="mbar-wave"></div><div class="mbar-wave"></div><div class="mbar-wave"></div><div class="mbar-wave"></div><div class="mbar-wave"></div></div>
         <div class="mbar-pbtn" id="sd-play-btn">
-          <svg id="sd-play-icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/></svg>
+          <svg id="sd-play-icon" viewBox="0 0 24 24" style="width:9px;height:9px;fill:#1DB954;margin-left:1px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </div>
       </div>
     </div>
@@ -903,23 +903,26 @@ function rotateHeadline(){
   },1600); // fast: 1.6s per phrase
 }
 
-/* ===== LOGOS (inline SVG — production-safe) ===== */
+/* ===== LOGOS — pure HTML text, works everywhere ===== */
 const L={
-  nike:`<svg viewBox="0 0 100 40" fill="none"><path d="M3 30L82 6c3-.9 5 1 3 3.5L35 34c-4 4.5-9 5-13 2.5L3 30z" fill="currentColor"/></svg>`,
-  adidas:`<svg viewBox="0 0 60 44" fill="none"><rect x="22" y="32" width="16" height="4" rx="1" fill="currentColor"/><rect x="15" y="22" width="30" height="4" rx="1" fill="currentColor"/><rect x="8" y="12" width="44" height="4" rx="1" fill="currentColor"/></svg>`,
-  zara:`<svg viewBox="0 0 82 22"><text y="19" font-family="Georgia,serif" font-weight="900" font-size="21" letter-spacing="5" fill="currentColor">ZARA</text></svg>`,
-  hm:`<svg viewBox="0 0 54 28"><text y="25" font-family="Arial,sans-serif" font-weight="900" font-size="26" fill="#E41C23">H&amp;M</text></svg>`,
-  koaj:`<svg viewBox="0 0 72 22"><text y="19" font-family="Arial,sans-serif" font-weight="900" font-size="17" letter-spacing="3" fill="currentColor">KOAJ</text></svg>`,
-  bershka:`<svg viewBox="0 0 112 18"><text y="15" font-family="Arial,sans-serif" font-weight="800" font-size="13" letter-spacing="1.5" fill="currentColor">BERSHKA</text></svg>`,
-  pull:`<svg viewBox="0 0 122 18"><text y="14" font-family="Arial,sans-serif" font-weight="800" font-size="11" letter-spacing="1" fill="currentColor">PULL&amp;BEAR</text></svg>`,
-  strad:`<svg viewBox="0 0 150 16"><text y="13" font-family="Georgia,serif" font-weight="600" font-size="11" letter-spacing="2" fill="currentColor">STRADIVARIUS</text></svg>`,
-  gucci:`<svg viewBox="0 0 80 28"><text y="23" font-family="Georgia,serif" font-weight="700" font-size="20" letter-spacing="2" fill="currentColor">GUCCI</text></svg>`,
-  lv:`<svg viewBox="0 0 50 28"><text y="23" font-family="Georgia,serif" font-weight="900" font-size="14" letter-spacing="1" fill="currentColor">LV</text></svg>`,
-  uniqlo:`<svg viewBox="0 0 100 28"><text y="22" font-family="Arial,sans-serif" font-weight="900" font-size="18" letter-spacing="1" fill="currentColor">UNIQLO</text></svg>`,
-  levis:`<svg viewBox="0 0 80 22"><text y="18" font-family="Arial,sans-serif" font-weight="900" font-size="16" letter-spacing="1" fill="#E31837">LEVI'S</text></svg>`,
-  supreme:`<svg viewBox="0 0 100 28"><rect width="100" height="28" fill="#FF0000" rx="2"/><text y="21" x="6" font-family="Arial,sans-serif" font-weight="900" font-size="16" letter-spacing="1" fill="#fff">SUPREME</text></svg>`,
+  nike:    {t:'NIKE',    bg:'#111',   color:'#fff',  fs:'13px', fw:'900', ls:'2px'},
+  adidas:  {t:'ADIDAS',  bg:'#111',   color:'#fff',  fs:'11px', fw:'900', ls:'1.5px'},
+  zara:    {t:'ZARA',    bg:'#111',   color:'#fff',  fs:'13px', fw:'900', ls:'3px'},
+  hm:      {t:'H&M',     bg:'#E41C23',color:'#fff',  fs:'15px', fw:'900', ls:'1px'},
+  koaj:    {t:'KOAJ',    bg:'#111',   color:'#fff',  fs:'12px', fw:'900', ls:'2px'},
+  bershka: {t:'BERSHKA', bg:'#111',   color:'#fff',  fs:'9px',  fw:'800', ls:'1px'},
+  pull:    {t:'P&B',     bg:'#111',   color:'#fff',  fs:'11px', fw:'800', ls:'1px'},
+  strad:   {t:'STRAD',   bg:'#111',   color:'#fff',  fs:'9px',  fw:'700', ls:'1px'},
+  gucci:   {t:'GUCCI',   bg:'#111',   color:'#c8a96e',fs:'12px',fw:'900', ls:'2px'},
+  lv:      {t:'LV',      bg:'#111',   color:'#c8a96e',fs:'16px',fw:'900', ls:'2px'},
+  uniqlo:  {t:'UNIQLO',  bg:'#E31837',color:'#fff',  fs:'10px', fw:'900', ls:'1px'},
+  levis:   {t:"LEVI'S",  bg:'#E31837',color:'#fff',  fs:'11px', fw:'900', ls:'1px'},
+  supreme: {t:'SUPREME', bg:'#FF0000',color:'#fff',  fs:'9px',  fw:'900', ls:'1px'},
 };
-function lEl(k,col='currentColor'){return `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:5px;color:${col};">${L[k]||k.toUpperCase()}</div>`;}
+function lEl(k){
+  const s=L[k]||{t:k.toUpperCase(),bg:'#222',color:'#fff',fs:'10px',fw:'800',ls:'1px'};
+  return `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:${s.bg};border-radius:inherit;"><span style="font-family:'Inter',Arial,sans-serif;font-size:${s.fs};font-weight:${s.fw};color:${s.color};letter-spacing:${s.ls};white-space:nowrap;">${s.t}</span></div>`;
+}
 
 /* ===== IMAGE POOL ===== */
 const P={
@@ -1141,7 +1144,7 @@ function storeListQR(k){openScan(k,STORES[k].items[0].id);}
 let musicPlaying=false;
 function openStore(k){
   curStore=k;const s=STORES[k];
-  musicPlaying=false;updateMusicUI();
+  musicPlaying=true;updateMusicUI();
   document.getElementById('sdh-bg').src=s.hero;
   document.getElementById('sdh-lc').innerHTML=lEl(k);
   document.getElementById('sdh-bn').textContent=s.n;
@@ -1162,13 +1165,14 @@ function updateMusicUI(){
   const btn=document.getElementById('sd-play-btn');
   if(musicPlaying){
     waves.style.display='flex';
-    icon.innerHTML='<rect x="6" y="4" width="4" height="16" fill="currentColor"/><rect x="14" y="4" width="4" height="16" fill="currentColor"/>';
-    btn.style.background='rgba(29,185,84,.12)';
-    btn.style.borderColor='rgba(29,185,84,.3)';
+    icon.innerHTML='<rect x="6" y="4" width="4" height="16" fill="#1DB954"/><rect x="14" y="4" width="4" height="16" fill="#1DB954"/>';
+    btn.style.background='rgba(29,185,84,.25)';
+    btn.style.borderColor='rgba(29,185,84,.5)';
   } else {
     waves.style.display='none';
-    icon.innerHTML='<polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>';
-    btn.style.background='';btn.style.borderColor='';
+    icon.innerHTML='<polygon points="5 3 19 12 5 21 5 3" fill="#1DB954"/>';
+    btn.style.background='rgba(29,185,84,.15)';
+    btn.style.borderColor='rgba(29,185,84,.3)';
   }
 }
 function buildSdCats(k,active){
